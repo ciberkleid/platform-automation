@@ -42,8 +42,10 @@ run:
 
     # ${vars_files_args[@] needs to be globbed to pass through properly
     # shellcheck disable=SC2068
+    echo "getting config dirname:"
+    dirname config
     echo "in memory interpolate"
     om interpolate --config "config/$CONFIG_FILE" ${vars_files_args[@]}
     echo "persistent interpolate"
-    om interpolate --config "config/$CONFIG_FILE" ${vars_files_args[@]} --output-file config/$CONFIG_FILE
+    om interpolate --config "config/$CONFIG_FILE" ${vars_files_args[@]} --output-file interpolated-files/$CONFIG_FILE
 # code_snippet creds-interpolate end
