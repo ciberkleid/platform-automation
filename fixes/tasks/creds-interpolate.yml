@@ -3,7 +3,7 @@
 # See our documentation for a detailed discussion of our semver API.
 # See www.semver.org for an explanation of semantic versioning.
 
-# code_snippet test-interpolate start yaml
+# code_snippet creds-interpolate start yaml
 ---
 platform: linux
 
@@ -36,7 +36,5 @@ run:
 
     # ${vars_files_args[@] needs to be globbed to pass through properly
     # shellcheck disable=SC2068
-      # mkdir -p interpolated-files/"$(dirname "$CONFIG_FILE")"
-      om interpolate --config "config/$CONFIG_FILE" ${vars_files_args[@]} \
-      > "config/$CONFIG_FILE"
-# code_snippet test-interpolate end
+    om interpolate --config "config/$CONFIG_FILE" ${vars_files_args[@]} > config/$CONFIG_FILE
+# code_snippet creds-interpolate end
