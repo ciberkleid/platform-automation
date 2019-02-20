@@ -13,7 +13,7 @@ inputs:
   optional: true
 
 outputs:
-- name: config
+- name: interpolated-files
 #contains all the *.yml files from `files/` input but after interpolation
 
 params:
@@ -46,7 +46,13 @@ run:
     dirname config
     echo "in memory interpolate"
     om interpolate --config "config/$CONFIG_FILE" ${vars_files_args[@]}
+    echo "copy files from original config to interpolated-files"
+    mkdir -p interpolated-files
+    cd config
+    cp -R . ../interpolated-files/
+    cd ..
+    ls interpolated-files
+    cat interpolated-files/$CONFIG_FILE
     echo "persistent interpolate"
-    # mkdir -p interpolated-files/"$(dirname "$CONFIG_FILE")"
-    om interpolate --config "config/$CONFIG_FILE" ${vars_files_args[@]} > config/$CONFIG_FILE
+    om interpolate --config "config/$CONFIG_FILE" ${vars_files_args[@]} > interpolated-files/$CONFIG_FILE
 # code_snippet creds-interpolate end
