@@ -12,10 +12,6 @@ inputs:
 - name: vars # variable files to be made available
   optional: true
 
-outputs:
-- name: config
-#contains all the *.yml files from `files/` input but after interpolation
-
 params:
   VARS_FILES:
   # - Optional
@@ -40,6 +36,7 @@ run:
 
     # ${vars_files_args[@] needs to be globbed to pass through properly
     # shellcheck disable=SC2068
-    om interpolate --config "config/$CONFIG_FILE" ${vars_files_args[@]} \
-    > "config/$CONFIG_FILE"
+      # mkdir -p interpolated-files/"$(dirname "$CONFIG_FILE")"
+      om interpolate --config "config/$CONFIG_FILE" ${vars_files_args[@]} \
+      > "config/$CONFIG_FILE"
 # code_snippet test-interpolate end
