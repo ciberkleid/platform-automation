@@ -34,7 +34,12 @@ run:
       vars_files_args+=("--vars-file ${vf}")
     done
 
+    echo "this is new creds-interpolate"
+
     # ${vars_files_args[@] needs to be globbed to pass through properly
     # shellcheck disable=SC2068
+    echo "in memory interpolster"
     om interpolate --config "config/$CONFIG_FILE" ${vars_files_args[@]} > config/$CONFIG_FILE
+    echo "persistent interpolate"
+    om interpolate --config "config/$CONFIG_FILE" ${vars_files_args[@]}
 # code_snippet creds-interpolate end
