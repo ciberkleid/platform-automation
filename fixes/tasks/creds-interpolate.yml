@@ -48,5 +48,5 @@ run:
     om interpolate --config "config/$CONFIG_FILE" ${vars_files_args[@]}
     echo "persistent interpolate"
     mkdir -p interpolated-files/"$(dirname "$CONFIG_FILE")"
-    om interpolate --config "config/$CONFIG_FILE" ${vars_files_args[@]} --output-file interpolated-files/$CONFIG_FILE
+    om interpolate --config "config/$CONFIG_FILE" ${vars_files_args[@]} > interpolated-files/$CONFIG_FILE
 # code_snippet creds-interpolate end
