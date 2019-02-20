@@ -12,6 +12,10 @@ inputs:
 - name: vars # variable files to be made available
   optional: true
 
+outputs:
+- name: interpolated-files
+#contains all the *.yml files from `files/` input but after interpolation
+
 params:
   VARS_FILES:
   # - Optional
@@ -39,7 +43,7 @@ run:
     # ${vars_files_args[@] needs to be globbed to pass through properly
     # shellcheck disable=SC2068
     echo "in memory interpolster"
-    om interpolate --config "config/$CONFIG_FILE" ${vars_files_args[@]} > config/$CONFIG_FILE
+    om interpolate --config "config/$CONFIG_FILE" ${vars_files_args[@]} --output-file config/$CONFIG_FILE
     echo "persistent interpolate"
     om interpolate --config "config/$CONFIG_FILE" ${vars_files_args[@]}
 # code_snippet creds-interpolate end
