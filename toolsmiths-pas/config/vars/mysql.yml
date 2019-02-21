@@ -1,8 +1,8 @@
 deprecated_bindings_string: X
 global_recipient_email: donotreply@nowhere.io
 network_name: shafter-pas-subnet
-plan1_selector/single_node/az_multi_select: us-central1-f
-plan2_selector/single_node/az_multi_select: us-central1-f
-plan3_selector/single_node/az_multi_select: us-central1-f
+plan1_selector/single_node/az_multi_select: [ 'us-central1-f' ]
+plan2_selector/single_node/az_multi_select: [ 'us-central1-f' ]
+plan3_selector/single_node/az_multi_select: [ 'us-central1-f' ]
 service_network_name: shafter-services-subnet
 singleton_availability_zone: us-central1-f
