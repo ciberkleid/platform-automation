@@ -12,6 +12,11 @@ resources:
     api_token: {{pivnet_token}}
     product_slug: platform-automation
 
+- name: tile-config
+  type: git
+  source:
+    uri: https://github.com/DaxterM/tile-configuration.git
+
 - name: configuration
   type: git
   source:
@@ -46,6 +51,9 @@ jobs:
     - get: credentials
       params:
         unpack: true
+    - get: tile-config
+      params:
+        unpack: true
 
   - task: creds-interpolate
     image: pcf-automation-image
@@ -59,88 +67,91 @@ jobs:
     output_mapping:
       interpolated-files: configuration
 
-  - task: download-mysql
-    image: pcf-automation-image
-    file: configuration/fixes/tasks/download-product.yml
-    input_mapping:
-      config: configuration
-      secrets: credentials
-    params:
-      CONFIG_FILE: ((foundation))/config/versions/mysql.yml
-      VARS_FILES: secrets/creds-toolsmiths-pas.yml
-
-  - task: upload-mysql
-    image: pcf-automation-image
-    file: pcf-automation-tasks/tasks/upload-product.yml
-    input_mapping:
-      product: downloaded-product
-      env: configuration
-    params:
-      ENV_FILE: ((foundation))/config/templates/env.yml
-
-  - task: stage-product
-    image: pcf-automation-image
-    file: pcf-automation-tasks/tasks/stage-product.yml
-    input_mapping:
-      product: downloaded-product
-      env: configuration
-    params:
-      ENV_FILE: ((foundation))/config/templates/env.yml
-
-  - task: upload-stemcell
-    image: pcf-automation-image
-    file: pcf-automation-tasks/tasks/upload-stemcell.yml
-    input_mapping:
-      env: configuration
-      stemcell: downloaded-stemcell
-    params:
-      ENV_FILE: ((foundation))/config/templates/env.yml
-
-  - task: assign-stemcell
-    image: pcf-automation-image
-    file: pcf-automation-tasks/tasks/assign-stemcell.yml
-    input_mapping:
-      env: configuration
-      config: assign-stemcell-config
-    params:
-      ENV_FILE: ((foundation))/config/templates/env.yml
+  # - task: download-mysql
+  #   image: pcf-automation-image
+  #   file: configuration/fixes/tasks/download-product.yml
+  #   input_mapping:
+  #     config: configuration
+  #     secrets: credentials
+  #   params:
+  #     CONFIG_FILE: ((foundation))/config/versions/mysql.yml
+  #     VARS_FILES: secrets/creds-toolsmiths-pas.yml
+  #
+  # - task: upload-mysql
+  #   image: pcf-automation-image
+  #   file: pcf-automation-tasks/tasks/upload-product.yml
+  #   input_mapping:
+  #     product: downloaded-product
+  #     env: configuration
+  #   params:
+  #     ENV_FILE: ((foundation))/config/templates/env.yml
+  #
+  # - task: stage-product
+  #   image: pcf-automation-image
+  #   file: pcf-automation-tasks/tasks/stage-product.yml
+  #   input_mapping:
+  #     product: downloaded-product
+  #     env: configuration
+  #   params:
+  #     ENV_FILE: ((foundation))/config/templates/env.yml
+  #
+  # - task: upload-stemcell
+  #   image: pcf-automation-image
+  #   file: pcf-automation-tasks/tasks/upload-stemcell.yml
+  #   input_mapping:
+  #     env: configuration
+  #     stemcell: downloaded-stemcell
+  #   params:
+  #     ENV_FILE: ((foundation))/config/templates/env.yml
+  #
+  # - task: assign-stemcell
+  #   image: pcf-automation-image
+  #   file: pcf-automation-tasks/tasks/assign-stemcell.yml
+  #   input_mapping:
+  #     env: configuration
+  #     config: assign-stemcell-config
+  #   params:
+  #     ENV_FILE: ((foundation))/config/templates/env.yml
 
   - task: configure-mysql
     image: pcf-automation-image
     file: pcf-automation-tasks/tasks/configure-product.yml
     input_mapping:
-      config: configuration
+      config: tile-config
       env: configuration
-      vars: configuration
+      vars: tile-config
+      secrets: credentials
     params:
-      CONFIG_FILE: ((foundation))/config/templates/mysql.yml
-      VARS_FILES: config/((foundation))/config/defaults/mysql.yml vars/((foundation))/config/vars/mysql.yml
+      CONFIG_FILE: pivotal-mysql/2.5.3-build.7/product.yml
+      OPS_FILES: config/pivotal-mysql/2.5.3-build.7/features/backups_selector-s3.yml
+      VARS_FILES: vars/pivotal-mysql/2.5.3-build.7/product-default-vars.yml vars/pivotal-mysql/2.5.3-build.7/resource-vars.yml vars/pivotal-mysql/2.5.3-build.7/errand-vars.yml secrets/creds-toolsmiths-pas.yml
       ENV_FILE: ((foundation))/config/templates/env.yml
 
-- name: apply-mysql-changes
-  serial: true
-  plan:
-  - aggregate:
-    - get: configuration
-      trigger: true
-      passed: [ mysql ]
-      params:
-        unpack: true
-    - get: pcf-automation-image
-      resource: pcf-automation
-      params:
-        unpack: true
-        globs: ["*image*"]
-    - get: pcf-automation-tasks
-      resource: pcf-automation
-      params:
-        unpack: true
-        globs: ["*tasks*"]
 
-  - task: apply-product-changes
-    image: pcf-automation-image
-    file: pcf-automation-tasks/tasks/apply-changes.yml
-    input_mapping:
-      env: configuration
-    params:
-      ENV_FILE: ((foundation))/config/templates/env.yml
+# - name: apply-mysql-changes
+#   serial: true
+#   plan:
+#   - aggregate:
+#     - get: configuration
+#       trigger: true
+#       passed: [ mysql ]
+#       params:
+#         unpack: true
+#     - get: pcf-automation-image
+#       resource: pcf-automation
+#       params:
+#         unpack: true
+#         globs: ["*image*"]
+#     - get: pcf-automation-tasks
+#       resource: pcf-automation
+#       params:
+#         unpack: true
+#         globs: ["*tasks*"]
+#
+#   - task: apply-product-changes
+#     image: pcf-automation-image
+#     file: pcf-automation-tasks/tasks/apply-changes.yml
+#     input_mapping:
+#       env: configuration
+#     params:
+#       ENV_FILE: ((foundation))/config/templates/env.yml
