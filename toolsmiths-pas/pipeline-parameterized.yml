@@ -30,7 +30,7 @@ resources:
     private_key: {{git_private_key}}
 
 jobs:
-- name: mysql
+- name: ((pivnet_product_slug))
   serial: true
   plan:
   - aggregate:
@@ -67,17 +67,17 @@ jobs:
     output_mapping:
       interpolated-files: configuration
 
-  - task: download-mysql
+  - task: download-product
     image: pcf-automation-image
     file: configuration/fixes/tasks/download-product.yml
     input_mapping:
       config: configuration
       secrets: credentials
     params:
-      CONFIG_FILE: ((foundation))/config/versions/pivotal-mysql.yml
+      CONFIG_FILE: ((foundation))/config/versions/((pivnet_product_slug)).yml
       VARS_FILES: secrets/creds-toolsmiths-pas.yml
 
-  - task: upload-mysql
+  - task: upload-product
     image: pcf-automation-image
     file: pcf-automation-tasks/tasks/upload-product.yml
     input_mapping:
@@ -113,7 +113,7 @@ jobs:
     params:
       ENV_FILE: ((foundation))/config/templates/env.yml
 
-  - task: configure-mysql
+  - task: configure-product
     image: pcf-automation-image
     file: pcf-automation-tasks/tasks/configure-product.yml
     input_mapping:
@@ -122,19 +122,19 @@ jobs:
       vars: tcg-config
       secrets: credentials
     params:
-      CONFIG_FILE: pivotal-mysql/2.5.3-build.7/product.yml
-      OPS_FILES: config/pivotal-mysql/2.5.3-build.7/features/backups_selector-s3.yml
-      VARS_FILES: vars/pivotal-mysql/2.5.3-build.7/product-default-vars.yml vars/pivotal-mysql/2.5.3-build.7/resource-vars.yml vars/pivotal-mysql/2.5.3-build.7/errand-vars.yml secrets/creds-toolsmiths-pas.yml
+      CONFIG_FILE: ((pivnet_product_slug))/((product-version))/product.yml
+      OPS_FILES: ((ops_files))
+      VARS_FILES: vars/((pivnet_product_slug))/((product-version))/product-default-vars.yml vars/((pivnet_product_slug))/((product-version))/resource-vars.yml vars/((pivnet_product_slug))/((product-version))/errand-vars.yml secrets/creds-((foundation)).yml
       ENV_FILE: ((foundation))/config/templates/env.yml
 
 
-# - name: apply-mysql-changes
+# - name: apply-changes
 #   serial: true
 #   plan:
 #   - aggregate:
 #     - get: configuration
 #       trigger: true
-#       passed: [ mysql ]
+#       passed: [ ((pivnet_product_slug)) ]
 #       params:
 #         unpack: true
 #     - get: pcf-automation-image
