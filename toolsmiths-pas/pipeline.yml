@@ -12,7 +12,7 @@ resources:
     api_token: {{pivnet_token}}
     product_slug: platform-automation
 
-- name: tile-config
+- name: tcg-config
   type: git
   source:
     uri: https://github.com/DaxterM/tile-configuration.git
@@ -51,7 +51,7 @@ jobs:
     - get: credentials
       params:
         unpack: true
-    - get: tile-config
+    - get: tcg-config
       params:
         unpack: true
 
@@ -117,9 +117,9 @@ jobs:
     image: pcf-automation-image
     file: pcf-automation-tasks/tasks/configure-product.yml
     input_mapping:
-      config: tile-config
+      config: tcg-config
       env: configuration
-      vars: tile-config
+      vars: tcg-config
       secrets: credentials
     params:
       CONFIG_FILE: pivotal-mysql/2.5.3-build.7/product.yml
