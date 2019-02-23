@@ -1,0 +1,1 @@
+fly -t w sp -p toolsmiths-pas_p-rabbitmq -c ~/workspace/platform-automation/toolsmiths-pas/pipeline-parameterized.yml -l ~/workspace/platform-automation/toolsmiths-pas/p-rabbitmq-selector.yml -l ~/workspace/platform-automation-private/creds-toolsmiths-pas.yml
