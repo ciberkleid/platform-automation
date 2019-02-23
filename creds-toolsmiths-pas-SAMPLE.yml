@@ -1,0 +1,32 @@
+foundation: toolsmiths-pas
+opsman_host: pcf.abcde.cf-app.com
+opsman_userid: pivotalcf
+opsman_password: myopsmanpassword
+opsman_decryption_passphrase:
+pivnet_token: mypivnettoken 
+git_private_key: |
+  -----BEGIN RSA PRIVATE KEY-----
+  MIIJKQIBAAKCAgEAvwkL97vBllOSE39Wa5ppczT1cr5Blmkhadfoa1Va2/IBVyvk
+  ...
+  AXvHfOx5zhtOsx3j9CKanRXfHfXSANUC+/McpszjWuz3pbWkPhbzRnHJSLFP
+  -----END RSA PRIVATE KEY-----
+
+# MySQL Tile Config
+deprecated_bindings_string: X
+global_recipient_email: donotreply@nowhere.io
+network_name: abcde-pas-subnet
+plan1_selector/single_node/az_multi_select: [ 'us-central1-f' ]
+plan2_selector/single_node/az_multi_select: [ 'us-central1-f' ]
+plan3_selector/single_node/az_multi_select: [ 'us-central1-f' ]
+service_network_name: abcde-services-subnet
+singleton_availability_zone: us-central1-f
+backups_selector/s3/access_key_id: AKIAACCESSKEYIDVALUE 
+backups_selector/s3/secret_access_key: secretaccesskeyvaluexyz123xyz098
+backups_selector/s3/bucket_name: myuniquebucketname
+backups_selector/s3/path: somepathvalue
+backups_selector/s3/cron_schedule: 0 */8 * * *
+backups_selector/s3/enable_email_alerts: 
+
+# RabbitMQ Tile Config
+on_demand_broker_plan_1_rabbitmq_az_placement: [ 'us-central1-f' ] 
+
