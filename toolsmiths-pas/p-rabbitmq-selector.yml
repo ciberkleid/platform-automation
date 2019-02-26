@@ -1,3 +1,0 @@
-pivnet_product_slug: p-rabbitmq
-product-version: "1.15.4"
-ops_files: vars/p-rabbitmq/1.15.4/features/syslog_selector-disabled.yml 
