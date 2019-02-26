@@ -21,7 +21,7 @@ resources:
   type: git
   source:
     uri: git@github.com:ciberkleid/platform-automation.git
-    private_key: {{git_private_key}}    
+    private_key: {{git_private_key}}
 
 - name: credentials
   type: git
@@ -75,7 +75,7 @@ jobs:
       secrets: credentials
     params:
       CONFIG_FILE: common/config/templates/pivnet.yml
-      VARS_FILES: vars/((foundation))/common.yml vars/((foundation))/((pivnet-product-slug)).yml
+      VARS_FILES: secrets/((foundation))/common.yml secrets/((foundation))/((pivnet-product-slug)).yml
 
   - task: upload-product
     image: pcf-automation-image
