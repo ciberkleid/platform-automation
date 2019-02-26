@@ -38,21 +38,14 @@ run:
       vars_files_args+=("--vars-file ${vf}")
     done
 
-    echo "this is new creds-interpolate"
+    echo "Custom creds-interpolate task"
 
     # ${vars_files_args[@] needs to be globbed to pass through properly
     # shellcheck disable=SC2068
-    echo "getting config dirname:"
-    dirname config
-    echo "in memory interpolate"
-    om interpolate --config "config/$CONFIG_FILE" ${vars_files_args[@]}
-    echo "copy files from original config to interpolated-files"
+    echo "Copy files from original config to interpolated-files"
     mkdir -p interpolated-files
     cd config
     cp -R . ../interpolated-files/
     cd ..
-    ls interpolated-files
-    cat interpolated-files/$CONFIG_FILE
-    echo "persistent interpolate"
     om interpolate --config "config/$CONFIG_FILE" ${vars_files_args[@]} > interpolated-files/$CONFIG_FILE
 # code_snippet creds-interpolate end
