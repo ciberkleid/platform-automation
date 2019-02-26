@@ -21,7 +21,7 @@ resources:
   type: git
   source:
     uri: git@github.com:ciberkleid/platform-automation.git
-    private_key: {{git_private_key}}
+    private_key: {{git_private_key}}    
 
 - name: credentials
   type: git
@@ -30,12 +30,12 @@ resources:
     private_key: {{git_private_key}}
 
 jobs:
-- name: ((pivnet_product_slug))
+- name: ((foundation))-((pivnet-product-slug))
   serial: true
   plan:
   - aggregate:
     - get: configuration
-      trigger: true
+      trigger: false
       params:
         unpack: true
     - get: pcf-automation-image
@@ -62,8 +62,8 @@ jobs:
       config: configuration
       vars: credentials
     params:
-      VARS_FILES: vars/creds-toolsmiths-pas.yml
-      CONFIG_FILE: ((foundation))/config/templates/env.yml
+      VARS_FILES: vars/((foundation))/common.yml
+      CONFIG_FILE: common/config/templates/env.yml
     output_mapping:
       interpolated-files: configuration
 
@@ -74,8 +74,8 @@ jobs:
       config: configuration
       secrets: credentials
     params:
-      CONFIG_FILE: ((foundation))/config/versions/((pivnet_product_slug)).yml
-      VARS_FILES: secrets/creds-toolsmiths-pas.yml
+      CONFIG_FILE: common/config/templates/pivnet.yml
+      VARS_FILES: vars/((foundation))/common.yml vars/((foundation))/((pivnet-product-slug)).yml
 
   - task: upload-product
     image: pcf-automation-image
@@ -84,7 +84,7 @@ jobs:
       product: downloaded-product
       env: configuration
     params:
-      ENV_FILE: ((foundation))/config/templates/env.yml
+      ENV_FILE: common/config/templates/env.yml
 
   - task: stage-product
     image: pcf-automation-image
@@ -93,7 +93,7 @@ jobs:
       product: downloaded-product
       env: configuration
     params:
-      ENV_FILE: ((foundation))/config/templates/env.yml
+      ENV_FILE: common/config/templates/env.yml
 
   - task: upload-stemcell
     image: pcf-automation-image
@@ -102,7 +102,7 @@ jobs:
       env: configuration
       stemcell: downloaded-stemcell
     params:
-      ENV_FILE: ((foundation))/config/templates/env.yml
+      ENV_FILE: common/config/templates/env.yml
 
   - task: assign-stemcell
     image: pcf-automation-image
@@ -111,7 +111,7 @@ jobs:
       env: configuration
       config: assign-stemcell-config
     params:
-      ENV_FILE: ((foundation))/config/templates/env.yml
+      ENV_FILE: common/config/templates/env.yml
 
   - task: configure-product
     image: pcf-automation-image
@@ -122,10 +122,10 @@ jobs:
       vars: tcg-config
       secrets: credentials
     params:
-      CONFIG_FILE: ((pivnet_product_slug))/((product-version))/product.yml
+      CONFIG_FILE: ((config_file))
       OPS_FILES: ((ops_files))
-      VARS_FILES: vars/((pivnet_product_slug))/((product-version))/product-default-vars.yml vars/((pivnet_product_slug))/((product-version))/resource-vars.yml vars/((pivnet_product_slug))/((product-version))/errand-vars.yml secrets/creds-((foundation)).yml
-      ENV_FILE: ((foundation))/config/templates/env.yml
+      VARS_FILES: ((vars_files)) secrets/((foundation))/((pivnet-product-slug)).yml
+      ENV_FILE: common/config/templates/env.yml
 
 
 # - name: apply-changes
@@ -134,7 +134,7 @@ jobs:
 #   - aggregate:
 #     - get: configuration
 #       trigger: true
-#       passed: [ ((pivnet_product_slug)) ]
+#       passed: [ ((pivnet-product-slug)) ]
 #       params:
 #         unpack: true
 #     - get: pcf-automation-image
@@ -154,4 +154,4 @@ jobs:
 #     input_mapping:
 #       env: configuration
 #     params:
-#       ENV_FILE: ((foundation))/config/templates/env.yml
+#       ENV_FILE: common/config/templates/env.yml

@@ -1,5 +1,0 @@
-pivnet-api-token: ((pivnet_token))
-pivnet-file-glob: "p-rabbitmq*.pivotal"
-pivnet-product-slug: "p-rabbitmq"
-product-version: "1.15.4"
-stemcell-iaas: "google"

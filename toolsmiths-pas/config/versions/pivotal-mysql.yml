@@ -1,5 +1,5 @@
-pivnet-api-token: ((pivnet_token))
-pivnet-file-glob: "pivotal-mysql*.pivotal"
+pivnet_api_token: ((pivnet_token))
+pivnet_file_glob: "pivotal-mysql*.pivotal"
 pivnet-product-slug: "pivotal-mysql"
-product-version: "2.5.3"
-stemcell-iaas: "google"
+product_version: "2.5.3"
+stemcell_iaas: "google"
