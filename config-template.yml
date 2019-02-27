@@ -35,7 +35,7 @@ stemcell_iaas: "google"
 # Paths are relative to output of tile-config-generator tool
 #   See https://github.com/DaxterM/tile-configuration for reference
 #   Use "vars" as destination of output for tcg tool/repo clone
-#   Note that 'config_file' does not need to specify a parent dir above the slug
+#   Note that 'config_file' does not need to specify a parent dir above the slug 
 
 config_file: p-some-slug/1.2.3/product.yml
 
