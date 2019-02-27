@@ -7,6 +7,7 @@ Before you start, you should have:
 2. Your Pivnet API api_token
 3. The Pivnet details for the tile you wish to install (slug, version, file glob)
 4. A private git repo, and a corresponding git private key
+5. Access to Concourse to run the generated pipeline(s)
 
 Instructions:
 1. Clone this repo to your local machine
