@@ -33,5 +33,13 @@ if [[ $GO == "Y" ]]; then
     fly -t w sp -p ${PIPELINE_NAME} \
                 -c ${PIPELINE_CONFIG_FILE} \
                 -l ${SECRETS_FILE_COMMON} \
-                -l ${SECRETS_FILE}
+                -l ${SECRETS_FILE} \
+                --non-interactive
+fi
+
+echo " Unpause pipeline? [Y/N]: "
+read GO
+
+if [[ $GO == "Y" ]]; then
+    fly -t w unpause-pipeline --pipeline ${PIPELINE_NAME}
 fi
