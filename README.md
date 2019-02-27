@@ -1,7 +1,8 @@
 # platform-automation
-Repository for using platform-automation
+Repository for easily using PCF Platform Automation
 
-Before you start, you should have:
+
+# Before you start, you should have:
 
 1. The URL, username and password of the Ops Manager you want to target
 2. Your Pivnet API api_token
@@ -9,7 +10,8 @@ Before you start, you should have:
 4. A private git repo, and a corresponding git private key
 5. Access to Concourse to run the generated pipeline(s)
 
-Instructions:
+# Instructions:
+
 1. Clone this repo to your local machine
 2. Follow the directions at the head of file `config-template-common.yml`
 3. Follow the directions at the head of file `config-template.yml`
