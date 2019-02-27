@@ -1,5 +1,5 @@
 pivnet_api_token: ((pivnet_token))
-pivnet_file_glob: ((pivnet-file_glob))
-pivnet-product-slug: ((pivnet-product-slug))
+pivnet_file_glob: ((pivnet_file_glob))
+pivnet-product-slug: ((pivnet_product_slug))
 product_version: ((product_version))
 stemcell_iaas: ((stemcell_iaas))

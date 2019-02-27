@@ -43,4 +43,4 @@ vars_files: vars/p-some-slug/1.2.3/product-default-vars.yml vars/p-some-slug/1.2
 ops_files: vars/p-some-slug/1.2.3/features/some-file.yml vars/p-some-slug/1.2.3/features/some-other-file.yml
 
 ##### SECTION 3 - Config parameters
-some-parameter: some-value
+some_parameter: some-value
