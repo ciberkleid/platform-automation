@@ -16,7 +16,7 @@ SECRETS_HOME=${SECRETS_HOME:-~/workspace/platform-automation-private}
 
 # Set fly command variables
 PIPELINE_NAME=${FOUNDATION}-${SLUG}
-PIPELINE_CONFIG_FILE=${CONFIG_HOME}/${FOUNDATION}/pipeline-parameterized.yml
+PIPELINE_CONFIG_FILE=${CONFIG_HOME}/pipeline-parameterized.yml
 SECRETS_FILE_COMMON=${SECRETS_HOME}/${FOUNDATION}/common.yml
 SECRETS_FILE=${SECRETS_HOME}/${FOUNDATION}/${SLUG}.yml
 
