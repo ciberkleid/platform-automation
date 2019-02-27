@@ -9,7 +9,7 @@ resources:
 - name: pcf-automation
   type: pivnet
   source:
-    api_token: {{pivnet_token}}
+    api_token: {{pivnet_api_token}}
     product_slug: platform-automation
 
 - name: tcg-config
