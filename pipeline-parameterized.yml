@@ -127,31 +127,30 @@ jobs:
       VARS_FILES: ((vars_files)) secrets/((foundation))/((pivnet_product_slug)).yml
       ENV_FILE: common/config/templates/env.yml
 
+- name: apply-changes
+  serial: true
+  plan:
+  - aggregate:
+    - get: configuration
+      trigger: true
+      passed: [ ((foundation))-((pivnet_product_slug)) ]
+      params:
+        unpack: true
+    - get: pcf-automation-image
+      resource: pcf-automation
+      params:
+        unpack: true
+        globs: ["*image*"]
+    - get: pcf-automation-tasks
+      resource: pcf-automation
+      params:
+        unpack: true
+        globs: ["*tasks*"]
 
-# - name: apply-changes
-#   serial: true
-#   plan:
-#   - aggregate:
-#     - get: configuration
-#       trigger: true
-#       passed: [ ((foundation))-((pivnet_product_slug)) ]
-#       params:
-#         unpack: true
-#     - get: pcf-automation-image
-#       resource: pcf-automation
-#       params:
-#         unpack: true
-#         globs: ["*image*"]
-#     - get: pcf-automation-tasks
-#       resource: pcf-automation
-#       params:
-#         unpack: true
-#         globs: ["*tasks*"]
-#
-#   - task: apply-product-changes
-#     image: pcf-automation-image
-#     file: pcf-automation-tasks/tasks/apply-changes.yml
-#     input_mapping:
-#       env: configuration
-#     params:
-#       ENV_FILE: common/config/templates/env.yml
+  - task: apply-product-changes
+    image: pcf-automation-image
+    file: pcf-automation-tasks/tasks/apply-changes.yml
+    input_mapping:
+      env: configuration
+    params:
+      ENV_FILE: common/config/templates/env.yml
