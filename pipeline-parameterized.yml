@@ -30,7 +30,7 @@ resources:
     private_key: {{git_private_key}}
 
 jobs:
-- name: ((foundation))-((pivnet-product-slug))
+- name: ((foundation))-((pivnet_product_slug))
   serial: true
   plan:
   - aggregate:
@@ -75,7 +75,7 @@ jobs:
       secrets: credentials
     params:
       CONFIG_FILE: common/config/templates/pivnet.yml
-      VARS_FILES: secrets/((foundation))/common.yml secrets/((foundation))/((pivnet-product-slug)).yml
+      VARS_FILES: secrets/((foundation))/common.yml secrets/((foundation))/((pivnet_product_slug)).yml
 
   - task: upload-product
     image: pcf-automation-image
@@ -124,7 +124,7 @@ jobs:
     params:
       CONFIG_FILE: ((config_file))
       OPS_FILES: ((ops_files))
-      VARS_FILES: ((vars_files)) secrets/((foundation))/((pivnet-product-slug)).yml
+      VARS_FILES: ((vars_files)) secrets/((foundation))/((pivnet_product_slug)).yml
       ENV_FILE: common/config/templates/env.yml
 
 
@@ -134,7 +134,7 @@ jobs:
 #   - aggregate:
 #     - get: configuration
 #       trigger: true
-#       passed: [ ((pivnet-product-slug)) ]
+#       passed: [ ((foundation))-((pivnet_product_slug)) ]
 #       params:
 #         unpack: true
 #     - get: pcf-automation-image
