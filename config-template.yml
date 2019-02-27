@@ -2,6 +2,11 @@
 
 ########################
 # HOW TO USE THIS FILE:
+#
+# This file provides tile-specific configuration for a tile on a given foundation
+# You will need a private git repository
+#
+# - Make a copy of this template. Rename using slug (e.g. p-rabbitmq.yml, pivotal-mysql.yml, etc)
 # - Set the slug and version in section 1 as desired
 # - Update the slugs and versions in section 2 accordingly
 # - Use the 'design.sh' script to process this file and produce
@@ -16,12 +21,15 @@
 #      - Use "vars" as destination of output for tcg tool/repo clone
 #      - vars_files and ops_files can each be a space-delimited list
 #      - For empty ops_files, use "ops_files:  ../common/config/templates/empty-file.yml"
+#      - Note that 'config_file' does not need to specify a parent dir above the slug
 # - When satisfied with ops_files, copy the parameters provided by 'design.sh'
 #   into section 3 below
 # - Provide values for the params in section 3
-# - Check this file into a private repo
-#      - Rename using ((foundation))-((pivnet-product-slug)).yml, for example
-# - Use as input for 'fly-set-pipeline-parameterized.yml'
+# Follow the directions in the README or in `config-template-common.yml` to create
+#     a separate common config file for the foundation
+# Push this file to your private repo using the following naming convention:
+#    - <private-repo-root>/((foundation))/((pivnet-product-slug)).yml
+# Run the script `fly-set-pipeline.sh`
 ########################
 
 ##### SECTION 1 - Basics
@@ -35,7 +43,7 @@ stemcell_iaas: "google"
 # Paths are relative to output of tile-config-generator tool
 #   See https://github.com/DaxterM/tile-configuration for reference
 #   Use "vars" as destination of output for tcg tool/repo clone
-#   Note that 'config_file' does not need to specify a parent dir above the slug 
+#   Note that 'config_file' does not need to specify a parent dir above the slug
 
 config_file: p-some-slug/1.2.3/product.yml
 
