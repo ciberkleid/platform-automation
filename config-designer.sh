@@ -1,5 +1,5 @@
 # Get user input
-if [ ${1} = "" ]; then
+if [ -z ${1} ]; then
   echo "Enter designer file [p-rabbitmq-designer.yml]: "
   read DESIGNER
   echo "Enter temp dir [_tmp]: "
@@ -60,15 +60,13 @@ done
 # Create designer output file including slug, version and options files,
 # as well as the  list of additional variables for which values need to
 # be provided.
-#OUTPUT_FILE=RESULT-${DESIGNER}
-#cp ${DESIGNER} ${TEMP_DIR}/${OUTPUT_FILE}
 printf "\nChange the ops-files in your designer file until you have the desired configuration\n"
 printf "\nCopy any parameters listed below to section 3 of your designer file\n"
 printf "Follow the instructions in the header of the designer template\n\n"
 
 pushd ${TEMP_DIR} > /dev/null
 
-om interpolate --config ${CONFIG_FILE} \
+om interpolate --config vars/${CONFIG_FILE} \
                ${ops_files_args[@]} \
                ${vars_files_args[@]} \
                --vars-file ../${DESIGNER} \
