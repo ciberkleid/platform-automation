@@ -20,7 +20,7 @@
 #        https://github.com/DaxterM/tile-configuration
 #      - Use "vars" as destination of output for tcg tool/repo clone
 #      - vars_files and ops_files can each be a space-delimited list
-#      - For empty ops_files, use "ops_files:  ../common/config/templates/empty-file.yml"
+#      - For empty ops_files, use "ops_files:  env/common/config/templates/empty-file.yml"
 #      - Note that 'config_file' does not need to specify a parent dir above the slug
 # - When satisfied with ops_files, copy the parameters provided by 'design.sh'
 #   into section 3 below
