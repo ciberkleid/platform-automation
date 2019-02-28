@@ -1,0 +1,34 @@
+##### Tile Configuration
+
+##### SECTION 1 - Basics
+pivnet_product_slug: pivotal-mysql
+product_version: "2.5.3"
+product_build: "2.5.3-build.7" # used by config-designer.sh
+pivnet_file_glob: "pivotal-mysql*.pivotal"
+stemcell_iaas: "google"
+
+##### SECTION 2 - Config files
+config_file: pivotal-mysql/2.5.3-build.7/product.yml
+
+vars_files: vars/pivotal-mysql/2.5.3-build.7/product-default-vars.yml vars/pivotal-mysql/2.5.3-build.7/resource-vars.yml vars/pivotal-mysql/2.5.3-build.7/errand-vars.yml
+
+ops_files: vars/pivotal-mysql/2.5.3-build.7/features/backups_selector-s3.yml
+
+##### SECTION 3 - Config parameters
+network_name: abc-pas-subnet
+service_network_name: abc-services-subnet
+singleton_availability_zone: us-central1-f
+
+deprecated_bindings_string: X
+global_recipient_email: donotreply@nowhere.io
+
+plan1_selector/single_node/az_multi_select: [ 'us-central1-f' ]
+plan2_selector/single_node/az_multi_select: [ 'us-central1-f' ]
+plan3_selector/single_node/az_multi_select: [ 'us-central1-f' ]
+
+backups_selector/s3/access_key_id: my-access-key-id
+backups_selector/s3/secret_access_key: my-secret-access-key
+backups_selector/s3/bucket_name: my-bucket-name
+backups_selector/s3/path: my-bucket-path
+backups_selector/s3/cron_schedule: 0 */8 * * *
+backups_selector/s3/enable_email_alerts:

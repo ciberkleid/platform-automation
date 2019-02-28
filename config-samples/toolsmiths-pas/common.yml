@@ -1,0 +1,15 @@
+##### Common Configuration
+
+foundation: toolsmiths-pas
+opsman_host: pcf.abc.cf-app.com
+opsman_userid: pivotalcf
+opsman_password: my-opsman-password
+opsman_decryption_passphrase:
+pivnet_api_token: my-token
+git_private_key: |
+  -----BEGIN RSA PRIVATE KEY-----
+  MIIJKQIBAAKCAgEAvwkL97vBllOSE39Wa5ppczT1cr5Blmkhadfoa1Va2/IBVyvk
+  NJ9PqoTI+BahF2EgzweyiDSvKsstlTsG7QgiM9So8Voi2PlDOrXL6uOfCuAS/G8X
+  ...
+  AXvHfOx5zhtOsx3j9CKanRXfHfXSANUC+/McpszjWuz3pbWkPhbzRnHJSLFP
+  -----END RSA PRIVATE KEY-----

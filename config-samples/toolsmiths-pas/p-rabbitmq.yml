@@ -1,0 +1,30 @@
+##### Tile Configuration
+
+##### SECTION 1 - Basics
+pivnet_product_slug: p-rabbitmq
+product_version: "1.15.4"
+product_build: "1.15.4" # used by config-designer.sh
+pivnet_file_glob: "p-rabbitmq*.pivotal"
+stemcell_iaas: "google"
+
+##### SECTION 2 - Config files
+config_file: p-rabbitmq/1.15.4/product.yml
+
+vars_files: vars/p-rabbitmq/1.15.4/product-default-vars.yml vars/p-rabbitmq/1.15.4/resource-vars.yml vars/p-rabbitmq/1.15.4/errand-vars.yml
+
+ops_files: vars/p-rabbitmq/1.15.4/features/syslog_selector-disabled.yml vars/p-rabbitmq/1.15.4/features/multitenant_support-enabled.yml
+
+##### SECTION 3 - Config parameters
+network_name: abc-pas-subnet
+service_network_name: abc-services-subnet
+singleton_availability_zone: us-central1-f
+
+on_demand_broker_plan_1_rabbitmq_az_placement: [ 'us-central1-f' ]
+
+multitenant_support/enabled/broker_operator_set_policy_enabled:
+multitenant_support/enabled/disk_alarm_threshold:
+multitenant_support/enabled/server_admin_credentials_identity: my-username
+multitenant_support/enabled/server_admin_credentials_password: my-password
+multitenant_support/enabled/server_cluster_partition_handling: pause_minority
+multitenant_support/enabled/server_ports: 15672, 5672, 5671, 1883, 8883, 61613, 61614, 15674
+multitenant_support/enabled/server_ssl_verification_depth: 5
