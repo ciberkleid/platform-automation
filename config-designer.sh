@@ -19,7 +19,7 @@ SLUG=$(om interpolate \
 
 VERSION=$(om interpolate \
       --config ${DESIGNER} \
-      --path /product_version)
+      --path /product_build)
 
 CONFIG_FILE=$(om interpolate \
       --config ${DESIGNER} \
@@ -37,7 +37,8 @@ OPS_FILES=$(om interpolate \
 TCG=${TEMP_DIR}/vars
 
 if [ ! -f ${TCG}/${SLUG}/${VERSION}/product.yml ]; then
-    if [ -d ${TCG} ]; then rmdir ${TCG}; fi
+    cat ${TCG}/${SLUG}/${VERSION}/product.yml
+    if [ -d ${TCG} ]; then rm -rf ${TCG}; fi
     mkdir -p ${TCG}
     git clone --quiet git@github.com:DaxterM/tile-configuration.git ${TCG}
     printf "\nCloned tile-configuration repo into ${TCG}\n\n"
