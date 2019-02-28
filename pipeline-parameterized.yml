@@ -146,6 +146,21 @@ jobs:
       params:
         unpack: true
         globs: ["*tasks*"]
+    - get: credentials
+      params:
+        unpack: true
+
+  - task: creds-interpolate
+    image: pcf-automation-image
+    file: configuration/fixes/tasks/creds-interpolate.yml
+    input_mapping:
+      config: configuration
+      vars: credentials
+    params:
+      VARS_FILES: vars/((foundation))/common.yml
+      CONFIG_FILE: common/config/templates/env.yml
+    output_mapping:
+      interpolated-files: configuration
 
   - task: apply-product-changes
     image: pcf-automation-image
