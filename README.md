@@ -17,5 +17,6 @@ Repository for easily using PCF Platform Automation
 3. Follow the directions at the head of file `config-template.yml`
 4. Set your fly target using the alias "w"
 5. Log in to your fly cli
-6. Run the script `fly-set-pipeline.sh`
-7. Unpause the generated pipeline and start the first job
+6. Edit the `credentials` resource git URLs in `fly-set-pipeline.sh` to point to your private repo
+7. Run the script `fly-set-pipeline.sh`
+8. Unpause the generated pipeline and start the first job
