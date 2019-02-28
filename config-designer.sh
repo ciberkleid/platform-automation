@@ -15,7 +15,7 @@ TEMP_DIR=${TEMP_DIR:-_tmp}
 #SECRETS=${SECRETS:-~/workspace/platform-automation-private/toolsmiths-pas-p-rabbitmq.yml}
 SLUG=$(om interpolate \
       --config ${DESIGNER} \
-      --path /pivnet-product-slug)
+      --path /pivnet_product_slug)
 
 VERSION=$(om interpolate \
       --config ${DESIGNER} \
@@ -42,6 +42,9 @@ if [ ! -f ${TCG}/${SLUG}/${VERSION}/product.yml ]; then
     git clone --quiet git@github.com:DaxterM/tile-configuration.git ${TCG}
     printf "\nCloned tile-configuration repo into ${TCG}\n\n"
 fi
+
+mkdir -p ${TEMP_DIR}/"$(dirname env/common/config/templates/empty-file.yml)"
+touch ${TEMP_DIR}/env/common/config/templates/empty-file.yml
 
 # Parse vars files
 vars_files_args=("")
