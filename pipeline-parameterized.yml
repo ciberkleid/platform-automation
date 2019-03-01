@@ -132,7 +132,7 @@ jobs:
   plan:
   - aggregate:
     - get: configuration
-      trigger: true
+      trigger: false
       passed: [ ((foundation))-((pivnet_product_slug)) ]
       params:
         unpack: true
