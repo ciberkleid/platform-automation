@@ -17,7 +17,7 @@ Repository for easily using PCF Platform Automation
 1. Clone this repo to your local machine
 2. Copy the file `config-template-common.yml`. Update the values so that they are valid for your PCF foundation and push it to your private git repo using the following naming convention: **private-repo-root/foundation/common.yml**
      - For reference, please see the `config-sample` directory in this repository
-3. Copy the file `config-template.yml` and rename it using the slug (e.g. p-rabbitmq.yml, pivotal-mysql.yml, etc). Edit the values in section 1 (slug, version, build), as well as the values in the paths in section 2 (slug, build). Then, run the `config-designer.sh` script to produce the parameters that need to be added to section 3.
+3. Copy the file `config-template.yml` and rename it using the slug (e.g. `p-rabbitmq.yml`, `pivotal-mysql.yml`, etc). Edit the values in section 1 (slug, version, build), as well as the values in the paths in section 2 (slug, build). Then, run the `config-designer.sh` script to produce the parameters that need to be added to section 3.
      - You can add ops files to the config file (section 2) and rerun `config-designer.sh` as many times as necessary. Once you are satisfied with the configuration, copy the list of params to section 3 and provide values. Finally, push the config file to your private repo using the following convention: **private-repo-root/foundation/slug.yml**   
      - For reference, please see the `config-sample` directory in this repository
      - Note:
