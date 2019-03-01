@@ -7,7 +7,7 @@ Repository for easily using PCF Platform Automation
 1. The URL, username and password of the Ops Manager you want to target
 2. Your Pivnet API token
 3. The Pivnet details for the tile you wish to install (slug, version, file glob)
-4. An export of the default tile configuration. The pipeline uses [this tile configuration repo] (https://github.com/daxterm/tile-configuration) directly, so just make sure the tile/version you want is there.
+4. An export of the default tile configuration. The pipeline uses [this tile configuration repo](https://github.com/daxterm/tile-configuration) directly, so just make sure the tile/version you want is there.
 5. The build number. This is the number in the path to the tile configuration files from step 4 above. Sometimes it's the same as the version number, but sometimes it's different. Check the tile configuration repo above.
 6. A private git repo, and a corresponding git private key
 7. Access to Concourse to run the generated pipeline(s)
