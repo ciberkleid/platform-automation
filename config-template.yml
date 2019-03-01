@@ -9,10 +9,10 @@
 # - Make a copy of this template. Rename using slug (e.g. p-rabbitmq.yml, pivotal-mysql.yml, etc)
 # - Set the slug and version in section 1 as desired
 # - Update the slugs and versions in section 2 accordingly
-# - Use the 'design.sh' script to process this file and produce
+# - Use the 'config-designer.sh' script to process this file and produce
 #   a list of parameters for section 3
 # - Add/remove values from 'ops_files' in section 2 below as
-#   needed, and rerun 'design.sh' to re-generate section 3 params
+#   needed, and rerun 'config-designer.sh' to re-generate section 3 params
 #   until desired configuration is achieved
 #      Note:
 #      - paths in section 2 are relative to output of tile-config-generator tool
@@ -22,7 +22,7 @@
 #      - vars_files and ops_files can each be a space-delimited list
 #      - For empty ops_files, use "ops_files:  env/common/config/templates/empty-file.yml"
 #      - Note that 'config_file' does not need to specify a parent dir above the slug
-# - When satisfied with ops_files, copy the parameters provided by 'design.sh'
+# - When satisfied with ops_files, copy the parameters provided by 'config-designer.sh'
 #   into section 3 below
 # - Provide values for the params in section 3
 # Follow the directions in the README or in `config-template-common.yml` to create
