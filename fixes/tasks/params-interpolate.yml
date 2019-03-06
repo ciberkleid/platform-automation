@@ -42,7 +42,7 @@ run:
     ops_files_args=("")
     for of in ${OPS_FILES}
     do
-      ops_files_args+=("-o ${of}")
+      ops_files_args+=("--ops-file config/${of}")
     done
 
     echo "Custom params-interpolate task"
