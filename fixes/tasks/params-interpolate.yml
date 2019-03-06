@@ -54,7 +54,6 @@ run:
     cd config
     cp -R . ../interpolated-files/
     cd ..
-    om interpolate --config "config/$CONFIG_FILE" ${ops_files_args[@]} > interpolated-files/$CONFIG_FILE
 
     bosh int "config/${CONFIG_FILE}" ${ops_files_args[@]} > interpolated-files/$CONFIG_FILE
 # code_snippet params-interpolate end
