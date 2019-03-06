@@ -37,9 +37,10 @@ if [[ $GO == "Y" ]]; then
                 --non-interactive
 fi
 
-echo " Unpause pipeline? [Y/N]: "
+echo "Unpause and trigger? [Y/N]: "
 read GO
 
 if [[ $GO == "Y" ]]; then
     fly -t w unpause-pipeline --pipeline ${PIPELINE_NAME}
+    fly -t w trigger-job --job ${PIPELINE_NAME}/${PIPELINE_NAME}
 fi
