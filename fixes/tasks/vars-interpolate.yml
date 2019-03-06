@@ -3,7 +3,7 @@
 # See our documentation for a detailed discussion of our semver API.
 # See www.semver.org for an explanation of semantic versioning.
 
-# code_snippet creds-interpolate start yaml
+# code_snippet vars-interpolate start yaml
 ---
 platform: linux
 
@@ -38,7 +38,7 @@ run:
       vars_files_args+=("--vars-file ${vf}")
     done
 
-    echo "Custom creds-interpolate task"
+    echo "Custom vars-interpolate task"
 
     # ${vars_files_args[@] needs to be globbed to pass through properly
     # shellcheck disable=SC2068
@@ -48,4 +48,4 @@ run:
     cp -R . ../interpolated-files/
     cd ..
     om interpolate --config "config/$CONFIG_FILE" ${vars_files_args[@]} > interpolated-files/$CONFIG_FILE
-# code_snippet creds-interpolate end
+# code_snippet vars-interpolate end
