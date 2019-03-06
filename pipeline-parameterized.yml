@@ -55,15 +55,15 @@ jobs:
       params:
         unpack: true
 
-  - task: creds-interpolate
+  - task: vars-interpolate
     image: pcf-automation-image
-    file: configuration/fixes/tasks/creds-interpolate.yml
+    file: configuration/fixes/tasks/vars-interpolate.yml
     input_mapping:
       config: configuration
       vars: credentials
     params:
       VARS_FILES: vars/((foundation))/common.yml
-      CONFIG_FILE: common/config/templates/env.yml
+      CONFIG_FILE: config/templates/env.yml
     output_mapping:
       interpolated-files: configuration
 
@@ -74,7 +74,7 @@ jobs:
       config: configuration
       secrets: credentials
     params:
-      CONFIG_FILE: common/config/templates/pivnet.yml
+      CONFIG_FILE: config/templates/pivnet.yml
       VARS_FILES: secrets/((foundation))/common.yml secrets/((foundation))/((pivnet_product_slug)).yml
 
   - task: upload-product
@@ -84,7 +84,7 @@ jobs:
       product: downloaded-product
       env: configuration
     params:
-      ENV_FILE: common/config/templates/env.yml
+      ENV_FILE: config/templates/env.yml
 
   - task: stage-product
     image: pcf-automation-image
@@ -93,7 +93,7 @@ jobs:
       product: downloaded-product
       env: configuration
     params:
-      ENV_FILE: common/config/templates/env.yml
+      ENV_FILE: config/templates/env.yml
 
   - task: upload-stemcell
     image: pcf-automation-image
@@ -102,7 +102,7 @@ jobs:
       env: configuration
       stemcell: downloaded-stemcell
     params:
-      ENV_FILE: common/config/templates/env.yml
+      ENV_FILE: config/templates/env.yml
 
   - task: assign-stemcell
     image: pcf-automation-image
@@ -111,7 +111,18 @@ jobs:
       env: configuration
       config: assign-stemcell-config
     params:
-      ENV_FILE: common/config/templates/env.yml
+      ENV_FILE: config/templates/env.yml
+
+  - task: params-interpolate
+    image: pcf-automation-image
+    file: configuration/fixes/tasks/params-interpolate.yml
+    input_mapping:
+      config: tcg-config
+      vars: credentials
+    params:
+      VARS_FILES: vars/((foundation))/((pivnet_product_slug)).yml
+    output_mapping:
+      interpolated-files: tcg-config
 
   - task: configure-product
     image: pcf-automation-image
@@ -123,9 +134,8 @@ jobs:
       secrets: credentials
     params:
       CONFIG_FILE: ((config_file))
-      OPS_FILES: ((ops_files))
       VARS_FILES: ((vars_files)) secrets/((foundation))/((pivnet_product_slug)).yml
-      ENV_FILE: common/config/templates/env.yml
+      ENV_FILE: config/templates/env.yml
 
 - name: apply-changes
   serial: true
@@ -150,15 +160,15 @@ jobs:
       params:
         unpack: true
 
-  - task: creds-interpolate
+  - task: vars-interpolate
     image: pcf-automation-image
-    file: configuration/fixes/tasks/creds-interpolate.yml
+    file: configuration/fixes/tasks/vars-interpolate.yml
     input_mapping:
       config: configuration
       vars: credentials
     params:
       VARS_FILES: vars/((foundation))/common.yml
-      CONFIG_FILE: common/config/templates/env.yml
+      CONFIG_FILE: config/templates/env.yml
     output_mapping:
       interpolated-files: configuration
 
@@ -168,4 +178,4 @@ jobs:
     input_mapping:
       env: configuration
     params:
-      ENV_FILE: common/config/templates/env.yml
+      ENV_FILE: config/templates/env.yml
