@@ -118,7 +118,7 @@ jobs:
     file: configuration/fixes/tasks/params-interpolate.yml
     input_mapping:
       config: tcg-config
-      vars: credentials
+      secrets: vars
     params:
       VARS_FILES: vars/((foundation))/((pivnet_product_slug)).yml
     output_mapping:
