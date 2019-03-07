@@ -35,12 +35,15 @@ if [[ $GO == "Y" ]]; then
                 -l ${SECRETS_FILE_COMMON} \
                 -l ${SECRETS_FILE} \
                 --non-interactive
-fi
 
-echo "Unpause and trigger? [Y/N]: "
-read GO
+               echo "Unpause and trigger? [Y/N]: "
+               read GO
 
-if [[ $GO == "Y" ]]; then
-    fly -t w unpause-pipeline --pipeline ${PIPELINE_NAME}
-    fly -t w trigger-job --job ${PIPELINE_NAME}/${PIPELINE_NAME}
+               if [[ $GO == "Y" ]]; then
+                   fly -t w unpause-pipeline --pipeline ${PIPELINE_NAME}
+                   fly -t w trigger-job --job ${PIPELINE_NAME}/${PIPELINE_NAME}
+               fi
+
+else
+    echo "Aborting fly set-pipeline..."
 fi
