@@ -31,10 +31,10 @@ vars_files: vars/p-healthwatch/1.4.4-build.1/product-default-vars.yml vars/p-hea
 ops_files: p-healthwatch/1.4.4-build.1/features/boshtasks-disable.yml
 
 ##### SECTION 3 - Config parameters
-network_name: malibu-pas-subnet
-service_network_name: malibu-services-subnet
+network_name: abc-pas-subnet
+service_network_name: abc-services-subnet
 singleton_availability_zone: us-central1-f
 
 healthwatch-forwarder/health_check_az: us-central1-f
 
-opsman/enable/url: https://pcf.malibu.cf-app.com
+opsman/enable/url: https://pcf.abc.cf-app.com

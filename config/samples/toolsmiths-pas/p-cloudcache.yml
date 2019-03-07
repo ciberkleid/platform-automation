@@ -31,8 +31,8 @@ vars_files: vars/p-cloudcache/1.6.1-build.5/product-default-vars.yml vars/p-clou
 ops_files: p-cloudcache/1.6.1-build.5/features/errand_plan-plan1.yml
 
 ##### SECTION 3 - Config parameters
-network_name: malibu-pas-subnet
-service_network_name: malibu-services-subnet
+network_name: abc-pas-subnet
+service_network_name: abc-services-subnet
 singleton_availability_zone: us-central1-f
 
 confirm_tls_setup: X
