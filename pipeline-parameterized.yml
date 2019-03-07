@@ -20,7 +20,7 @@ resources:
 - name: configuration
   type: git
   source:
-    uri: git@github.com:ciberkleid/platform-automation.git
+    uri: {{git_private_repo}}
     private_key: {{git_private_key}}
 
 - name: credentials
