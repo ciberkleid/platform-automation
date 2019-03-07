@@ -6,6 +6,7 @@ opsman_userid: pivotalcf
 opsman_password: my-opsman-password
 opsman_decryption_passphrase:
 pivnet_api_token: my-token
+git_private_repo: git@github.com:my-username/my-private-repo.git
 git_private_key: |
   -----BEGIN RSA PRIVATE KEY-----
   MIIJKQIBAAKCAgEAvwkL97vBllOSE39Wa5ppczT1cr5Blmkhadfoa1Va2/IBVyvk
