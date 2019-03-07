@@ -1,5 +1,14 @@
 ##### Tile Configuration
 
+#####
+# To change the tile configuration, add or remove ops_files and use
+# config-designer.sh to product the list of params for section 3
+#   ref: https://github.com/ciberkleid/platform-automation/blob/master/config-designer.sh
+#
+# For list of ops_files to choose from, use "tile-config-generator" or refer to the following repo
+#   ref: https://github.com/DaxterM/tile-configuration
+#####
+
 ##### SECTION 1 - Basics
 pivnet_product_slug: p-cloudcache
 product_version: "1.6.1"
@@ -8,15 +17,22 @@ pivnet_file_glob: "p-cloudcache*.pivotal"
 stemcell_iaas: "google"
 
 ##### SECTION 2 - Config files
+# - Paths for config_file, vars_files, and ops_files are relative to
+#   the output of the "tile-config-generator" tool
+#   (see https://github.com/DaxterM/tile-configuration for reference)
+# - vars_files and ops_files can be space-delimited lists
+# - Prefix paths to vars_files with "vars/"
+# - If no ops_files are needed, specify "ops_files: "
+
 config_file: p-cloudcache/1.6.1-build.5/product.yml
 
 vars_files: vars/p-cloudcache/1.6.1-build.5/product-default-vars.yml vars/p-cloudcache/1.6.1-build.5/resource-vars.yml vars/p-cloudcache/1.6.1-build.5/errand-vars.yml
 
-ops_files: vars/p-cloudcache/1.6.1-build.5/features/errand_plan-plan1.yml
+ops_files: p-cloudcache/1.6.1-build.5/features/errand_plan-plan1.yml
 
 ##### SECTION 3 - Config parameters
-network_name: abc-pas-subnet
-service_network_name: abc-services-subnet
+network_name: malibu-pas-subnet
+service_network_name: malibu-services-subnet
 singleton_availability_zone: us-central1-f
 
 confirm_tls_setup: X
