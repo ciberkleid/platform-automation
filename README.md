@@ -1,31 +1,56 @@
 # platform-automation
 Repository for easily using PCF Platform Automation
 
+## Get started quickly
 
-## Before you start, you should have:
+### You will need:
+- The URL, username and password of the Ops Manager you want to target
+- Your Pivnet API token
+- The Pivnet details for the tile you wish to install (slug, version, file glob)
+- A private git repo, and a corresponding git private key
+- Access to Concourse to run the generated pipeline
 
-1. The URL, username and password of the Ops Manager you want to target
-2. Your Pivnet API token
-3. The Pivnet details for the tile you wish to install (slug, version, file glob)
-4. An export of the default tile configuration. This pipeline uses [this tile configuration repo](https://github.com/daxterm/tile-configuration) directly, so just make sure the tile/version you want is there.
-5. The build number. This is the number in the path to the tile configuration files from step 4 above. Sometimes it's the same as the version number, but sometimes it's different. Check the tile configuration repo above.
-6. A private git repo, and a corresponding git private key
-7. Access to Concourse to run the generated pipeline
+### Easy setup:
+1. Clone this repo, as well as your private repo, to your local machine, as follows:
+`git clone git@github.com:ciberkleid/platform-automation.git`
+`git clone git@github.com:<YOUR-USERNAME>/<YOUR-PRIVATE-REPO>.git platform-automation-private`
 
-## Instructions:
+2. Copy the sample config files from this repo to your private repo:
+`cp -ri platform-automation/config/samples/toolsmiths-pas platform-automation-private`
 
-1. Clone this repo to your local machine
-2. Copy the file `config-template-common.yml`. Update the values so that they are valid for your PCF foundation and push it to your private git repo using the following naming convention: **private-repo-root/foundation/common.yml**
-     - For reference, please see the `config-samples` directory in this repository
-3. Copy the file `config-template.yml` and rename it using the slug (e.g. `p-rabbitmq.yml`, `pivotal-mysql.yml`, etc). Edit the values in section 1 (slug, version, build), as well as the values in the paths in section 2 (slug, build). Then, run the `config-designer.sh` script to produce the parameters you will need to add to section 3.
-     - You can add ops files to your config file (section 2) and rerun `config-designer.sh` as many times as necessary. The selection of ops files to choose from can be found on the tile configuration repo (see step 4 above), or in the local `_tmp/vars` directory, as the script will clone the repo there.
-     - For reference, please see the `config-samples` directory in this repository
-     - Note:
-       - `ops_files` can each be a space-delimited list of ops_files
-       - The file path should be relative to the root of the tile configuration repository (see sample config files)
-       - If no ops files are needed, use `ops_files:  `
-       - Once you are satisfied with the configuration, copy the list of parameters to section 3 and provide values.
-    - Finally, push the config file to your private repo using the following convention: **private-repo-root/foundation/slug.yml**   
-4. Edit the file `fly-set-pipeline.sh` so that the `credentials` resource points to your private repo
-5. Run the script `fly-set-pipeline.sh`. The script assumes a target alias `w`
-6. Unpause the generated pipeline and start the first job
+3. Rename the `toolsmiths-pas` directory to an alias of your choice for your PCF foundation. Make the same change inside of the `common.yml` file inside the directory.
+
+4. Edit the values in `common.yml` and in any of the tile-specific config files you wish to use. See the section below titled `Build Out Your Tile Config` for tips on changing ops_files or adding/removing keys from section 3 of the tile-specific config files. Check your changes into your private git repo:
+`cd platform-automation-private`
+`git add .`
+`git commit -m "updated config files"`
+`git push`
+`cd ..`
+
+5. Log in to Concourse using "w" as your Concourse target alias and set your pipeline:
+`fly --target w login --team-name <YOUR-CONCOURSE-TEAM-NAME> --concourse-url <YOUR-CONCOURSE-URL>`
+
+6. Set the pipeline. Enter the appropriate values at the prompts. You can also accept the defaults in shown in brackets. The script will also prompt to ask if you wish to unpause and trigger the pipeline.
+`. ./fly-set-pipeline`
+
+7. The apply-changes job is configured to require a manual trigger. Keep an eye on the pipeline's progress and kick off the apply-changes job manually. Edit the file `pipeline-parameterized.yml` to make the trigger(s) automatic rather than manual.
+
+That's it! You're done.
+
+The next section provides guidance on determining the list of params for section 3 of the tile-specific config files based on changes to the choice of ops_files.
+
+## Build Out Your Tile Config
+If the sample config files do not reflect the configuration you wish to use, or if you want to create config files for tiles not represented in the samples, this section is for you.
+
+Steps:
+
+1. Run the `design-config.sh` script to produce the parameters you will need to set for a given tile installation. For example:
+`. ./design-config.sh` #follow prompts to provide your config file
+or
+`. ./design-config.sh ~/workspace/platform-automation-private/toolsmiths-pas/pivotal-mysql.yml`
+
+2. Edit the ops_files in your tile config file.
+
+Repeat steps 1 and 2 until you are satisfied with your configuration.
+
+3. Copy parameters provided by `design-config.sh` to your tile config file and assign values as needed. Remember to add a ":" to all parameters, even if you are leaving the value empty.

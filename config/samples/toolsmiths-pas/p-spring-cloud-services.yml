@@ -2,8 +2,8 @@
 
 #####
 # To change the tile configuration, add or remove ops_files and use
-# config-designer.sh to product the list of params for section 3
-#   ref: https://github.com/ciberkleid/platform-automation/blob/master/config-designer.sh
+# design-config.sh to product the list of params for section 3
+#   ref: https://github.com/ciberkleid/platform-automation/blob/master/design-config.sh
 #
 # For list of ops_files to choose from, use "tile-config-generator" or refer to the following repo
 #   ref: https://github.com/DaxterM/tile-configuration
@@ -12,7 +12,7 @@
 ##### SECTION 1 - Basics
 pivnet_product_slug: p-spring-cloud-services
 product_version: "2.0.6"
-product_build: "2.0.6" # used by config-designer.sh
+product_build: "2.0.6" # used by design-config.sh
 pivnet_file_glob: "p-spring-cloud-services*.pivotal"
 stemcell_iaas: "google"
 
