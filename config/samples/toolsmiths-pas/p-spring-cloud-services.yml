@@ -31,5 +31,5 @@ vars_files: vars/p-spring-cloud-services/2.0.6/product-default-vars.yml vars/p-s
 ops_files:
 
 ##### SECTION 3 - Config parameters
-network_name: malibu-pas-subnet
+network_name: abc-pas-subnet
 singleton_availability_zone: us-central1-f
