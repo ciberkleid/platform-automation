@@ -24,7 +24,7 @@ cp -ri platform-automation/config/samples/toolsmiths-pas platform-automation-pri
 
 3. Rename the `toolsmiths-pas` directory to an alias of your choice for your PCF foundation. Make the same change inside of the `common.yml` file inside the directory.
 
-4. Edit the values in `common.yml` and in any of the tile-specific config files you wish to use. See the section below titled `Build Out Your Tile Config` for tips on changing ops_files or adding/removing keys from section 3 of the tile-specific config files. Check your changes into your private git repo:
+4. Edit the values in `common.yml` and in any of the tile-specific config files you wish to use. See the section below titled [Build Out Your Tile Config](README.md#build-out-your-tile-config) for tips on changing ops_files or adding/removing keys from section 3 of the tile-specific config files. Check your changes into your private git repo:
 ```
 cd platform-automation-private
 git add .
