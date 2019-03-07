@@ -38,7 +38,7 @@ cd ..
 fly --target w login --team-name <YOUR-CONCOURSE-TEAM-NAME> --concourse-url <YOUR-CONCOURSE-URL>
 ```
 
-6. Set the pipeline for a given tile using the [fly-set-pipeline.yml](fly-set-pipeline.yml) script. The script will prompt you for the required input. You can also accept the defaults in shown in brackets. The script will also prompt to ask if you wish to unpause and trigger the pipeline.
+6. Set the pipeline for a given tile using the [fly-set-pipeline.sh](fly-set-pipeline.sh) script. The script will prompt you for the required input. You can also accept the defaults in shown in brackets. The script will also prompt to ask if you wish to unpause and trigger the pipeline.
 ```
 . ./fly-set-pipeline
 ```
