@@ -42,7 +42,7 @@ run:
 
     # ${vars_files_args[@] needs to be globbed to pass through properly
     # shellcheck disable=SC2068
-    echo "Copy files from original config to interpolated-files"
+
     mkdir -p interpolated-files
     cd config
     cp -R . ../interpolated-files/
