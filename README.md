@@ -12,26 +12,36 @@ Repository for easily using PCF Platform Automation
 
 ### Easy setup:
 1. Clone this repo, as well as your private repo, to your local machine, as follows:
-`git clone git@github.com:ciberkleid/platform-automation.git`
-`git clone git@github.com:<YOUR-USERNAME>/<YOUR-PRIVATE-REPO>.git platform-automation-private`
+```
+git clone git@github.com:ciberkleid/platform-automation.git
+git clone git@github.com:<YOUR-USERNAME>/<YOUR-PRIVATE-REPO>.git platform-automation-private
+```
 
 2. Copy the sample config files from this repo to your private repo:
-`cp -ri platform-automation/config/samples/toolsmiths-pas platform-automation-private`
+```
+cp -ri platform-automation/config/samples/toolsmiths-pas platform-automation-private
+```
 
 3. Rename the `toolsmiths-pas` directory to an alias of your choice for your PCF foundation. Make the same change inside of the `common.yml` file inside the directory.
 
 4. Edit the values in `common.yml` and in any of the tile-specific config files you wish to use. See the section below titled `Build Out Your Tile Config` for tips on changing ops_files or adding/removing keys from section 3 of the tile-specific config files. Check your changes into your private git repo:
-`cd platform-automation-private`
-`git add .`
-`git commit -m "updated config files"`
-`git push`
-`cd ..`
+```
+cd platform-automation-private
+git add .
+git commit -m "updated config files"
+git push
+cd ..
+```
 
 5. Log in to Concourse using "w" as your Concourse target alias and set your pipeline:
-`fly --target w login --team-name <YOUR-CONCOURSE-TEAM-NAME> --concourse-url <YOUR-CONCOURSE-URL>`
+```
+fly --target w login --team-name <YOUR-CONCOURSE-TEAM-NAME> --concourse-url <YOUR-CONCOURSE-URL>
+```
 
 6. Set the pipeline. Enter the appropriate values at the prompts. You can also accept the defaults in shown in brackets. The script will also prompt to ask if you wish to unpause and trigger the pipeline.
-`. ./fly-set-pipeline`
+```
+. ./fly-set-pipeline
+```
 
 7. The apply-changes job is configured to require a manual trigger. Keep an eye on the pipeline's progress and kick off the apply-changes job manually. Edit the file `pipeline-parameterized.yml` to make the trigger(s) automatic rather than manual.
 
@@ -45,9 +55,13 @@ If the sample config files do not reflect the configuration you wish to use, or 
 Steps:
 
 1. Run the `design-config.sh` script to produce the parameters you will need to set for a given tile installation. For example:
-`. ./design-config.sh` #follow prompts to provide your config file
+```
+. ./design-config.sh #follow prompts to provide your config file
+```
 or
-`. ./design-config.sh ~/workspace/platform-automation-private/toolsmiths-pas/pivotal-mysql.yml`
+```
+. ./design-config.sh ~/workspace/platform-automation-private/toolsmiths-pas/pivotal-mysql.yml
+```
 
 2. Edit the ops_files in your tile config file.
 
