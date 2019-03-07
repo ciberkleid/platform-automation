@@ -39,21 +39,23 @@ run:
       --config ${VARS_FILES} \
       --path /ops_files)
 
-    ops_files_args=("")
-    for of in ${OPS_FILES}
-    do
-      ops_files_args+=("--ops-file config/${of}")
-    done
+    if [[ $OPS_FILES != "" ]]; then
+      ops_files_args=("")
+      for of in ${OPS_FILES}
+      do
+        ops_files_args+=("--ops-file config/${of}")
+      done
 
-    echo "Custom params-interpolate task"
+      echo "Custom params-interpolate task"
 
-    # ${ops_files_args[@] needs to be globbed to pass through properly
-    # shellcheck disable=SC2068
-    echo "Copy files from original config to interpolated-files"
-    mkdir -p interpolated-files
-    cd config
-    cp -R . ../interpolated-files/
-    cd ..
+      # ${ops_files_args[@] needs to be globbed to pass through properly
+      # shellcheck disable=SC2068
+      echo "Copy files from original config to interpolated-files"
+      mkdir -p interpolated-files
+      cd config
+      cp -R . ../interpolated-files/
+      cd ..
 
-    bosh int "config/${CONFIG_FILE}" ${ops_files_args[@]} > interpolated-files/$CONFIG_FILE
+      bosh int "config/${CONFIG_FILE}" ${ops_files_args[@]} > interpolated-files/$CONFIG_FILE
+    fi      
 # code_snippet params-interpolate end
