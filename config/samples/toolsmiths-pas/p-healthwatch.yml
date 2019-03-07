@@ -10,10 +10,10 @@
 #####
 
 ##### SECTION 1 - Basics
-pivnet_product_slug: p-spring-cloud-services
-product_version: "2.0.6"
-product_build: "2.0.6" # used by config-designer.sh
-pivnet_file_glob: "p-spring-cloud-services*.pivotal"
+pivnet_product_slug: p-healthwatch
+product_version: "1.4.4"
+product_build: "1.4.4-build.1" # used by config-designer.sh
+pivnet_file_glob: "p-healthwatch*.pivotal"
 stemcell_iaas: "google"
 
 ##### SECTION 2 - Config files
@@ -24,12 +24,17 @@ stemcell_iaas: "google"
 # - Prefix paths to vars_files with "vars/"
 # - If no ops_files are needed, specify "ops_files: "
 
-config_file: p-spring-cloud-services/2.0.6/product.yml
+config_file: p-healthwatch/1.4.4-build.1/product.yml
 
-vars_files: vars/p-spring-cloud-services/2.0.6/product-default-vars.yml vars/p-spring-cloud-services/2.0.6/resource-vars.yml vars/p-spring-cloud-services/2.0.6/errand-vars.yml
+vars_files: vars/p-healthwatch/1.4.4-build.1/product-default-vars.yml vars/p-healthwatch/1.4.4-build.1/resource-vars.yml vars/p-healthwatch/1.4.4-build.1/errand-vars.yml
 
-ops_files:
+ops_files: p-healthwatch/1.4.4-build.1/features/boshtasks-disable.yml
 
 ##### SECTION 3 - Config parameters
 network_name: malibu-pas-subnet
+service_network_name: malibu-services-subnet
 singleton_availability_zone: us-central1-f
+
+healthwatch-forwarder/health_check_az: us-central1-f
+
+opsman/enable/url: https://pcf.malibu.cf-app.com

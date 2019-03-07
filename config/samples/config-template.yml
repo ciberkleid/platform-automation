@@ -1,56 +1,40 @@
 ##### Tile Configuration
 
-########################
-# HOW TO USE THIS FILE:
+#####
+# To change the tile configuration, add or remove ops_files and use
+# config-designer.sh to product the list of params for section 3
+#   ref: https://github.com/ciberkleid/platform-automation/blob/master/config-designer.sh
 #
-# This file provides tile-specific configuration for a tile on a given foundation
-# You will need a private git repository
-#
-# - Make a copy of this template. Rename using slug (e.g. p-rabbitmq.yml, pivotal-mysql.yml, etc)
-# - Set the slug and version in section 1 as desired
-# - Update the slugs and versions in section 2 accordingly
-# - Use the 'config-designer.sh' script to process this file and produce
-#   a list of parameters for section 3
-# - Add/remove values from 'ops_files' in section 2 below as
-#   needed, and rerun 'config-designer.sh' to re-generate section 3 params
-#   until desired configuration is achieved
-#      Note:
-#      - paths in section 2 are relative to output of tile-config-generator tool
-#      - tile-config-generator tool is available for reference at:
-#        https://github.com/DaxterM/tile-configuration
-#      - Use "vars" as destination of output for tcg tool/repo clone
-#      - vars_files and ops_files can each be a space-delimited list
-#      - For empty ops_files, use "ops_files:  env/common/config/templates/empty-file.yml"
-#      - Note that 'config_file' does not need to specify a parent dir above the slug
-# - When satisfied with ops_files, copy the parameters provided by 'config-designer.sh'
-#   into section 3 below
-# - Provide values for the params in section 3
-# Follow the directions in the README or in `config-template-common.yml` to create
-#     a separate common config file for the foundation
-# Push this file to your private repo using the following naming convention:
-#    - <private-repo-root>/((foundation))/((pivnet-product-slug)).yml
-# Run the script `fly-set-pipeline.sh`
-########################
+# For list of ops_files to choose from, use "tile-config-generator" or refer to the following repo
+#   ref: https://github.com/DaxterM/tile-configuration
+#####
 
 ##### SECTION 1 - Basics
-pivnet_product_slug: p-some-slug
+pivnet_product_slug: p-product-slug
 product_version: "1.2.3"
 product_build: "1.2.3-build.4" # used by config-designer.sh
-pivnet_file_glob: "p-some-slug*.pivotal"
+pivnet_file_glob: "p-product-slug*.pivotal"
 stemcell_iaas: "google"
 
 ##### SECTION 2 - Config files
-# vars_files and ops_files can be space-delimited list
-# Paths are relative to output of tile-config-generator tool
-#   See https://github.com/DaxterM/tile-configuration for reference
-#   Use "vars" as destination of output for tcg tool/repo clone
-#   Note that 'config_file' does not need to specify a parent dir above the slug
+# - Paths for config_file, vars_files, and ops_files are relative to
+#   the output of the "tile-config-generator" tool
+#   (see https://github.com/DaxterM/tile-configuration for reference)
+# - vars_files and ops_files can be space-delimited lists
+# - Prefix paths to vars_files with "vars/"
+# - If no ops_files are needed, specify "ops_files: "
 
-config_file: p-some-slug/1.2.3/product.yml
+config_file: p-product-slug/1.2.3-build.4/product.yml
 
-vars_files: vars/p-some-slug/1.2.3/product-default-vars.yml vars/p-some-slug/1.2.3/resource-vars.yml vars/p-some-slug/1.2.3/errand-vars.yml
+vars_files: vars/p-product-slug/1.2.3-build.4/product-default-vars.yml vars/p-product-slug/1.2.3-build.4/resource-vars.yml vars/p-product-slug/1.2.3-build.4/errand-vars.yml
 
-ops_files: vars/p-some-slug/1.2.3/features/some-file.yml vars/p-some-slug/1.2.3/features/some-other-file.yml
+ops_files: p-product-slug/1.2.3-build.4/features/options_file_1.yml p-product-slug/1.2.3-build.4/features/options_file_2.yml
 
 ##### SECTION 3 - Config parameters
-some_parameter: some-value
+network_name: abc-pas-subnet
+service_network_name: abc-services-subnet
+singleton_availability_zone: us-central1-f
+
+plan1_enable_service_plan/enable/service_instance_azs: [ 'us-central1-f' ]
+plan2_enable_service_plan/enable/service_instance_azs: [ 'us-central1-f' ]
+plan3_enable_service_plan/enable/service_instance_azs: [ 'us-central1-f' ]
