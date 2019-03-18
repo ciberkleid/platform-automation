@@ -1,0 +1,50 @@
+##### Tile Configuration
+
+#####
+# To change the tile configuration, add or remove ops_files and use
+# design-config.sh to product the list of params for section 3
+#   ref: https://github.com/ciberkleid/platform-automation/blob/master/design-config.sh
+#
+# For list of ops_files to choose from, use "tile-config-generator" or refer to the following repo
+#   ref: https://github.com/DaxterM/tile-configuration
+#####
+
+##### SECTION 1 - Basics
+pivnet_product_slug: pivotal-mysql
+product_version: "2.5.3"
+product_build: "2.5.3-build.7" # used by design-config.sh
+pivnet_file_glob: "pivotal-mysql*.pivotal"
+stemcell_iaas: "google"
+
+##### SECTION 2 - Config files
+# - Paths for config_file, vars_files, and ops_files are relative to
+#   the output of the "tile-config-generator" tool
+#   (see https://github.com/DaxterM/tile-configuration for reference)
+# - vars_files and ops_files can be space-delimited lists
+# - Prefix paths to vars_files with "vars/"
+# - If no ops_files are needed, specify "ops_files: "
+
+config_file: pivotal-mysql/2.5.3-build.7/product.yml
+
+vars_files: vars/pivotal-mysql/2.5.3-build.7/product-default-vars.yml vars/pivotal-mysql/2.5.3-build.7/resource-vars.yml vars/pivotal-mysql/2.5.3-build.7/errand-vars.yml
+
+ops_files: pivotal-mysql/2.5.3-build.7/features/backups_selector-s3.yml
+
+##### SECTION 3 - Config parameters
+network_name: abc-pas-subnet
+service_network_name: abc-services-subnet
+singleton_availability_zone: us-central1-f
+
+deprecated_bindings_string: X
+global_recipient_email: donotreply@nowhere.io
+
+plan1_selector/single_node/az_multi_select: [ 'us-central1-f' ]
+plan2_selector/single_node/az_multi_select: [ 'us-central1-f' ]
+plan3_selector/single_node/az_multi_select: [ 'us-central1-f' ]
+
+backups_selector/s3/access_key_id: my-secret-access-key-id
+backups_selector/s3/secret_access_key: my-secret-access-key
+backups_selector/s3/bucket_name: my-bucket-name
+backups_selector/s3/path: my-bucket-path
+backups_selector/s3/cron_schedule: 0 */8 * * *
+backups_selector/s3/enable_email_alerts:
