@@ -134,7 +134,7 @@ jobs:
       secrets: credentials
     params:
       CONFIG_FILE: ((config_file))
-      VARS_FILES: ((vars_files)) secrets/((foundation))/((pivnet_product_slug)).yml
+      VARS_FILES: ((vars_files)) secrets/((foundation))/common.yml secrets/((foundation))/((pivnet_product_slug)).yml
       ENV_FILE: config/templates/env.yml
 
 - name: apply-changes
