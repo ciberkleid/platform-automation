@@ -51,15 +51,28 @@ do
 done
 
 # Parse options files
+if [ ${OPS_FILES} == "null" ]; then
+    rm -f ${TEMP_DIR}/vars/empty-file.yml
+    touch ${TEMP_DIR}/vars/empty-file.yml
+    OPS_FILES=empty-file.yml
+fi
 ops_files_args=("")
 for of in ${OPS_FILES}
 do
   ops_files_args+=("--ops-file vars/${of}")
 done
 
-printf "\nGiven your tile config file, the following parameters need to be defined:\n\n"
+printf "\nRunning designer with the following env setup:\n\n"
 
 pushd ${TEMP_DIR} > /dev/null
+
+echo "working_dir: ${PWD}"
+echo "config: vars/${CONFIG_TEMPLATE}"
+echo "ops_files: ${ops_files_args[@]}"
+echo "vars_files: ${vars_files_args[@]}"
+echo "secrets: ${SECRETS_FILE}"
+
+printf "\nGiven your tile config file, the following parameters need to be defined:\n\n"
 
 om interpolate --config vars/${CONFIG_TEMPLATE} \
                ${ops_files_args[@]} \
