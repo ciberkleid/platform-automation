@@ -39,7 +39,7 @@ if [ ! -f ${TCG}/${SLUG}/${VERSION}/product.yml ]; then
     cat ${TCG}/${SLUG}/${VERSION}/product.yml
     if [ -d ${TCG} ]; then rm -rf ${TCG}; fi
     mkdir -p ${TCG}
-    git clone --quiet git@github.com:DaxterM/tile-configuration.git ${TCG}
+    git clone --quiet git@github.com:ciberkleid/tile-configuration.git ${TCG}
     printf "\nCloned tile-configuration repo into ${TCG}\n\n"
 fi
 
@@ -78,10 +78,10 @@ printf "   file and provide values as needed\n\n"
 
 printf "\n2. Otherwise, change the list of \"ops_files\" in your tile config file and re-run this script until\n"
 printf "   you are satisfied with your configuration\n"
-printf "     - For a list of ops_files to choose from, see https://github.com/DaxterM/tile-configuration or use\n"
+printf "     - For a list of ops_files to choose from, see https://github.com/ciberkleid/tile-configuration or use\n"
 printf "       the tile-config-generator tool to extract config options from a *.pivotal file\n"
 printf "       (tile-config-generator is available at https://github.com/pivotalservices/tile-config-generator)\n"
 printf "     - If you are using the tile-config-generator tool, make sure the files you choose are also available\n"
-printf "       on https://github.com/DaxterM/tile-configuration\n"
+printf "       on https://github.com/ciberkleid/tile-configuration\n"
 
 printf "\n"

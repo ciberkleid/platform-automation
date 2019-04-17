@@ -15,7 +15,7 @@ resources:
 - name: tcg-config
   type: git
   source:
-    uri: https://github.com/DaxterM/tile-configuration.git
+    uri: https://github.com/ciberkleid/tile-configuration.git
 
 - name: configuration
   type: git

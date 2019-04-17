@@ -6,7 +6,7 @@
 #   ref: https://github.com/ciberkleid/platform-automation/blob/master/design-config.sh
 #
 # For list of ops_files to choose from, use "tile-config-generator" or refer to the following repo
-#   ref: https://github.com/DaxterM/tile-configuration
+#   ref: https://github.com/ciberkleid/tile-configuration
 #####
 
 ##### SECTION 1 - Basics
@@ -19,7 +19,7 @@ stemcell_iaas: "google"
 ##### SECTION 2 - Config files
 # - Paths for config_file, vars_files, and ops_files are relative to
 #   the output of the "tile-config-generator" tool
-#   (see https://github.com/DaxterM/tile-configuration for reference)
+#   (see https://github.com/ciberkleid/tile-configuration for reference)
 # - vars_files and ops_files can be space-delimited lists
 # - Prefix paths to vars_files with "vars/"
 # - If no ops_files are needed, specify "ops_files: "
