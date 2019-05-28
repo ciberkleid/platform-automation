@@ -20,6 +20,7 @@ outputs:
 - name: downloaded-product
 - name: downloaded-stemcell
 - name: assign-stemcell-config
+- name: tile-config
 
 caches:
 - path: downloaded-files
@@ -101,4 +102,31 @@ run:
 
     { printf "\nFinished creating config file for assign-stemcell."; } 2> /dev/null
     # code_snippet assign-stemcell-support end
+
+    # code_snippet configure-product-support start bash
+    { printf "\nDownloading config template for configure-product..."; } 2> /dev/null
+    { printf "\nReading additional product details to get tile-config..."; } 2> /dev/null
+    # shellcheck disable=SC2068
+    pivnet-api-token=$(om interpolate \
+      --config config/"${CONFIG_FILE}" ${vars_files_args[@]} \
+      --path /pivnet-api-token)
+    product-version=$(om interpolate \
+                         --config config/"${CONFIG_FILE}" ${vars_files_args[@]} \
+                         --path /product-version)
+    pivnet-file-glob=$(om interpolate \
+                         --config config/"${CONFIG_FILE}" ${vars_files_args[@]} \
+                         --path /pivnet-file-glob)
+
+    om config-template \
+       --output-directory tile-config \
+       --pivnet-api-token "$pivnet-api-token" \
+       --pivnet-product-slug "$product_slug" \
+       --product-version "$product-version" \
+       --product-file-glob "$pivnet-file-glob"
+
+    # remove slug and version, account for possible build number in config template dir name
+    mv tile_config/${product_slug}/${product-version}*/* tile_config
+
+    { printf "\nFinished downloading config template for configure-product."; } 2> /dev/null
+    # code_snippet configure-product-support start bash
 # code_snippet download-product end
