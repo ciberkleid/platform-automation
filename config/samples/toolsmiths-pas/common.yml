@@ -1,5 +1,4 @@
 ##### Common Configuration
-
 foundation: toolsmiths-pas
 opsman_host: pcf.abc.cf-app.com
 opsman_userid: pivotalcf
@@ -14,3 +13,14 @@ git_private_key: |
   ...
   AXvHfOx5zhtOsx3j9CKanRXfHfXSANUC+/McpszjWuz3pbWkPhbzRnHJSLFP
   -----END RSA PRIVATE KEY-----
+
+##### Common Tile Configuration
+stemcell_iaas: "google"
+network_name: abc-pas-subnet
+service_network_name: abc-services-subnet
+singleton_availability_zone: us-central1-f
+az2_name: us-central1-c
+az3_name: us-central1-b
+# The following common tile configuration values should not be changed
+config_file: product.yml
+vars_files: vars/product-default-vars.yml vars/resource-vars.yml vars/errand-vars.yml

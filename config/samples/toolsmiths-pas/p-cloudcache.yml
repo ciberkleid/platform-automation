@@ -1,48 +1,25 @@
 ##### Tile Configuration
 
-#####
-# To change the tile configuration, add or remove ops_files and use
-# design-config.sh to product the list of params for section 3
-#   ref: https://github.com/ciberkleid/platform-automation/blob/master/design-config.sh
-#
-# For list of ops_files to choose from, use "tile-config-generator" or refer to the following repo
-#   ref: https://github.com/ciberkleid/tile-configuration
-#####
-
 ##### SECTION 1 - Basics
 pivnet_product_slug: p-cloudcache
 product_version: "1.6.1"
 product_build: "1.6.1-build.5" # used by design-config.sh
 pivnet_file_glob: "p-cloudcache*.pivotal"
-stemcell_iaas: "google"
 
 ##### SECTION 2 - Config files
-# - Paths for config_file, vars_files, and ops_files are relative to
-#   the output of the "tile-config-generator" tool
-#   (see https://github.com/ciberkleid/tile-configuration for reference)
-# - vars_files and ops_files can be space-delimited lists
-# - Prefix paths to vars_files with "vars/"
+##### SECTION 2 - Config files
 # - If no ops_files are needed, specify "ops_files: "
-
-config_file: p-cloudcache/1.6.1-build.5/product.yml
-
-vars_files: vars/p-cloudcache/1.6.1-build.5/product-default-vars.yml vars/p-cloudcache/1.6.1-build.5/resource-vars.yml vars/p-cloudcache/1.6.1-build.5/errand-vars.yml
-
-ops_files: p-cloudcache/1.6.1-build.5/features/errand_plan-plan1.yml
+ops_files: network/3-az-configuration.yml features/errand_plan-plan1.yml
 
 ##### SECTION 3 - Config parameters
-network_name: abc-pas-subnet
-service_network_name: abc-services-subnet
-singleton_availability_zone: us-central1-f
-
 confirm_tls_setup: X
 
-dev_plan_enable_service_plan/enable/service_instance_azs: [ 'us-central1-f' ]
+dev_plan_enable_service_plan/enable/service_instance_azs: [ 'us-central1-f', 'us-central1-c', 'us-central1-b' ]
 
-plan1_enable_service_plan/enable/service_instance_azs: [ 'us-central1-f' ]
-plan2_enable_service_plan/enable/service_instance_azs: [ 'us-central1-f' ]
-plan3_enable_service_plan/enable/service_instance_azs: [ 'us-central1-f' ]
-plan4_enable_service_plan/enable/service_instance_azs: [ 'us-central1-f' ]
-plan5_enable_service_plan/enable/service_instance_azs: [ 'us-central1-f' ]
+plan1_enable_service_plan/enable/service_instance_azs: [ 'us-central1-f', 'us-central1-c', 'us-central1-b' ]
+plan2_enable_service_plan/enable/service_instance_azs: [ 'us-central1-f', 'us-central1-c', 'us-central1-b' ]
+plan3_enable_service_plan/enable/service_instance_azs: [ 'us-central1-f', 'us-central1-c', 'us-central1-b' ]
+plan4_enable_service_plan/enable/service_instance_azs: [ 'us-central1-f', 'us-central1-c', 'us-central1-b' ]
+plan5_enable_service_plan/enable/service_instance_azs: [ 'us-central1-f', 'us-central1-c', 'us-central1-b' ]
 
-small_footprint_enable_service_plan/enable/service_instance_azs: [ 'us-central1-f' ]
+small_footprint_enable_service_plan/enable/service_instance_azs: [ 'us-central1-f', 'us-central1-c', 'us-central1-b' ]

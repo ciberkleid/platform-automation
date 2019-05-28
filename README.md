@@ -1,5 +1,5 @@
 # platform-automation
-Repository for easily using PCF Platform Automation
+Repository for easily using PCF Platform Automation to install service tiles on Pivotal Cloud Foundry
  
 ## Get started quickly
 
@@ -54,13 +54,9 @@ If the sample config files do not reflect the configuration you wish to use, or 
 
 Steps:
 
-1. Run the [design-config.sh](design-config.sh) script to produce the parameters you will need to set for a given tile installation. For example:
+1. Run the [design-config.sh](design-config.sh) script to produce the parameters you will need to set for a given tile installation. The script will prompt you for the required input. You can also accept the defaults in shown in brackets. 
 ```
-. ./design-config.sh #follow prompts to provide your config file
-```
-or, for example:
-```
-. ./design-config.sh ~/workspace/platform-automation-private/toolsmiths-pas/pivotal-mysql.yml
+. ./design-config.sh
 ```
 
 2. Edit the ops_files in your tile config file.
