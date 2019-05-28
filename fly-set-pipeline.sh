@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Get user input
 echo "Enter foundation name [toolsmiths-pas]: "
 read FOUNDATION

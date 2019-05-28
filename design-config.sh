@@ -1,47 +1,81 @@
-# Get user input
-if [ -z ${1} ]; then
-  echo "Enter absolute path to tile config file [~/workspace/platform-automation-private/toolsmiths-pas/p-rabbitmq.yml]: "
-  read SECRETS_FILE
-  SECRETS_FILE=$(eval echo ${SECRETS_FILE})
-  echo "Enter temp dir [_tmp]: "
-  read TEMP_DIR
-else
-  SECRETS_FILE=$1
+#!/usr/bin/env bash
+
+echo "Enter foundation name [toolsmiths-pas]: "
+read FOUNDATION
+echo "Enter Pivnet product slug [p-rabbitmq]: "
+read SLUG
+#echo "Enter tile config temp dir [~/workspace/platform-automation]: "
+#read CONFIG_HOME
+echo "Enter secrets home dir [~/workspace/platform-automation-private]: "
+read SECRETS_HOME
+
+# Set inputs or defaults
+FOUNDATION=${FOUNDATION:-toolsmiths-pas}
+SLUG=${SLUG:-p-rabbitmq}
+#CONFIG_HOME=${CONFIG_HOME:-~/workspace/platform-automation}
+SECRETS_HOME=${SECRETS_HOME:-~/workspace/platform-automation-private}
+SECRETS_FILE_COMMON=${SECRETS_HOME}/${FOUNDATION}/common.yml
+SECRETS_FILE=${SECRETS_HOME}/${FOUNDATION}/${SLUG}.yml
+#TEMP_DIR=${TEMP_DIR:-_tmp}
+TEMP_DIR=_tmp
+
+# Confirm
+echo "Designing config using:"
+echo "     secrets files:   ${SECRETS_FILE_COMMON}"
+echo "                      ${SECRETS_FILE}"
+echo "     tmp dir:         ${TEMP_DIR}"
+echo " Continue? [Y/N]: "
+read GO
+
+if [[ $GO != "Y" ]]; then
+    echo "Aborting fly set-pipeline..."
+    return -print 2>/dev/null || exit 1
 fi
-# Set variables
-SECRETS_FILE=${SECRETS_FILE:-~/workspace/platform-automation-private/toolsmiths-pas/p-rabbitmq.yml}
-TEMP_DIR=${TEMP_DIR:-_tmp}
 
-SLUG=$(om interpolate \
-      --config ${SECRETS_FILE} \
-      --path /pivnet_product_slug)
+if [[ ! -f ${SECRETS_FILE_COMMON} || ! -f ${SECRETS_FILE} ]]; then
+    echo "Error: secrets files specified above must exist"
+    return -print 2>/dev/null || exit 1
+fi
 
-VERSION=$(om interpolate \
+PIVNET_API_TOKEN=$(om interpolate \
+      --config ${SECRETS_FILE_COMMON} \
+      --path /pivnet_api_token)
+
+BUILD=$(om interpolate \
       --config ${SECRETS_FILE} \
       --path /product_build)
 
-CONFIG_TEMPLATE=$(om interpolate \
+VERSION=$(om interpolate \
       --config ${SECRETS_FILE} \
+      --path /product_version)
+
+GLOB=$(om interpolate \
+      --config ${SECRETS_FILE} \
+      --path /pivnet_file_glob)
+
+CONFIG_TEMPLATE=$(om interpolate \
+      --config ${SECRETS_FILE_COMMON} \
       --path /config_file)
 
 VARS_FILES=$(om interpolate \
-      --config ${SECRETS_FILE} \
+      --config ${SECRETS_FILE_COMMON} \
       --path /vars_files)
 
 OPS_FILES=$(om interpolate \
       --config ${SECRETS_FILE} \
       --path /ops_files)
 
-# Clone tile-config-generator output from GitHub
-TCG=${TEMP_DIR}/vars
-
-if [ ! -f ${TCG}/${SLUG}/${VERSION}/product.yml ]; then
-    cat ${TCG}/${SLUG}/${VERSION}/product.yml
-    if [ -d ${TCG} ]; then rm -rf ${TCG}; fi
-    mkdir -p ${TCG}
-    git clone --quiet git@github.com:ciberkleid/tile-configuration.git ${TCG}
-    printf "\nCloned tile-configuration repo into ${TCG}\n\n"
-fi
+# Get tile config template
+echo "Getting config template from PivNet"
+rm -rf ${TEMP_DIR}
+mkdir ${TEMP_DIR}
+om config-template \
+  --output-directory ${TEMP_DIR} \
+  --pivnet-api-token "${PIVNET_API_TOKEN}" \
+  --pivnet-product-slug "${SLUG}" \
+  --product-version "${VERSION}" \
+  --product-file-glob "${GLOB}"
+printf "\nConfig template copied to ${TEMP_DIR}\n\n"
 
 # Parse vars files
 vars_files_args=("")
@@ -51,7 +85,7 @@ do
 done
 
 # Parse options files
-if [ ${OPS_FILES} == "null" ]; then
+if [ "${OPS_FILES}" == "null" ]; then
     rm -f ${TEMP_DIR}/vars/empty-file.yml
     touch ${TEMP_DIR}/vars/empty-file.yml
     OPS_FILES=empty-file.yml
@@ -65,12 +99,13 @@ done
 printf "\nRunning designer with the following env setup:\n\n"
 
 pushd ${TEMP_DIR} > /dev/null
+ln -s ${SLUG}/${BUILD}/ vars
 
 echo "working_dir: ${PWD}"
-echo "config: vars/${CONFIG_TEMPLATE}"
-echo "ops_files: ${ops_files_args[@]}"
-echo "vars_files: ${vars_files_args[@]}"
 echo "secrets: ${SECRETS_FILE}"
+echo "config: vars/${CONFIG_TEMPLATE}"
+echo "vars_files: ${vars_files_args[@]}"
+echo "ops_files: ${ops_files_args[@]}"
 
 printf "\nGiven your tile config file, the following parameters need to be defined:\n\n"
 
@@ -82,19 +117,14 @@ om interpolate --config vars/${CONFIG_TEMPLATE} \
 
 popd > /dev/null
 
-# Generate list of additional variables for which values need to
-# be provided.
+# Generate list of additional variables for which values need to be provided.
 printf "\n\n----------\nNext steps:\n"
 
-printf "\n1. If you are satisfied with your configuration, copy any parameters listed above to your tile config\n"
-printf "   file and provide values as needed\n\n"
+printf "\n1. Satisfied with your configuration? Copy parameters listed above to your config files\n"
+printf "   (common and/or tile-specific) and provide values as needed\n\n"
 
-printf "\n2. Otherwise, change the list of \"ops_files\" in your tile config file and re-run this script until\n"
-printf "   you are satisfied with your configuration\n"
-printf "     - For a list of ops_files to choose from, see https://github.com/ciberkleid/tile-configuration or use\n"
-printf "       the tile-config-generator tool to extract config options from a *.pivotal file\n"
-printf "       (tile-config-generator is available at https://github.com/pivotalservices/tile-config-generator)\n"
-printf "     - If you are using the tile-config-generator tool, make sure the files you choose are also available\n"
-printf "       on https://github.com/ciberkleid/tile-configuration\n"
+printf "\n2. Otherwise, change the list of \"ops_files\" in your tile config file and re-run this\n"
+printf "   script until you are satisfied with your configuration\n"
+printf "     - For a list of ops_files to choose from, see the _tmp directory created by this script"
 
 printf "\n"

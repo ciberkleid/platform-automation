@@ -12,11 +12,6 @@ resources:
     api_token: {{pivnet_api_token}}
     product_slug: platform-automation
 
-- name: tcg-config
-  type: git
-  source:
-    uri: https://github.com/ciberkleid/tile-configuration.git
-
 - name: configuration
   type: git
   source:
@@ -49,9 +44,6 @@ jobs:
         unpack: true
         globs: ["*tasks*"]
     - get: credentials
-      params:
-        unpack: true
-    - get: tcg-config
       params:
         unpack: true
 
@@ -117,20 +109,20 @@ jobs:
     image: pcf-automation-image
     file: configuration/fixes/tasks/params-interpolate.yml
     input_mapping:
-      config: tcg-config
+      config: tile-config
       vars: credentials
     params:
       VARS_FILES: vars/((foundation))/((pivnet_product_slug)).yml
     output_mapping:
-      interpolated-files: tcg-config
+      interpolated-files: tile-config
 
   - task: configure-product
     image: pcf-automation-image
     file: pcf-automation-tasks/tasks/configure-product.yml
     input_mapping:
-      config: tcg-config
+      config: tile-config
       env: configuration
-      vars: tcg-config
+      vars: tile-config
       secrets: credentials
     params:
       CONFIG_FILE: ((config_file))
