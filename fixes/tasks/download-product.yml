@@ -125,7 +125,7 @@ run:
        --product-file-glob "$pivnet_file_glob"
 
     # remove slug and version, account for possible build number in config template dir name
-    mv tile_config/${product_slug}/${product-version}*/* tile_config
+    mv tile-config/${product_slug}/${product_version}*/* tile-config
 
     { printf "\nFinished downloading config template for configure-product."; } 2> /dev/null
     # code_snippet configure-product-support start bash
