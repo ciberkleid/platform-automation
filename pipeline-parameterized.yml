@@ -15,13 +15,13 @@ resources:
 - name: configuration
   type: git
   source:
-    uri: {{git_private_repo}}
-    private_key: {{git_private_key}}
+    uri: {{automation_repo}}
+#    private_key: {{git_private_key}}
 
 - name: credentials
   type: git
   source:
-    uri: git@github.com:ciberkleid/platform-automation-private.git
+    uri: {{automation_private_repo}}
     private_key: {{git_private_key}}
 
 jobs:
@@ -112,7 +112,7 @@ jobs:
       config: tile-config
       vars: credentials
     params:
-      VARS_FILES: vars/((foundation))/((pivnet_product_slug)).yml
+      VARS_FILES: vars/((foundation))/common.yml vars/((foundation))/((pivnet_product_slug)).yml
     output_mapping:
       interpolated-files: tile-config
 

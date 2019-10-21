@@ -36,6 +36,7 @@ if [[ $GO == "Y" ]]; then
                 -c ${PIPELINE_CONFIG_FILE} \
                 -l ${SECRETS_FILE_COMMON} \
                 -l ${SECRETS_FILE} \
+                --var "git_private_key=$(cat ~/.ssh/id_rsa)"
                 --non-interactive
 
                echo "Unpause and trigger? [Y/N]: "
